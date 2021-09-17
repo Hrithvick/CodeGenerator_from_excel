@@ -1,0 +1,480 @@
+
+struct
+ DIRECT_INTERFACE_HEADER
+{
+  uint16_t  Length;
+  uint32_t  Sequence_number;
+  uint8_t  Checksum_MD5[16];
+DIRECT_INTERFACE_HEADER();
+  DIRECT_INTERFACE_HEADER(uint8_t data[]);
+  DIRECT_INTERFACE_HEADER( uint16_t  Length,);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MESSAGE_HEADER
+{
+  NNF_Constants::TransactionCode  TransactionCode;
+  uint32_t  LogTime;
+  uint8_t AlphaChar[2];
+  uint32_t  TraderId;
+  uint16_t  ErrorCode;
+  uint64_t  Timestamp;
+  uint8_t TimeStamp1[8];
+  uint8_t TimeStamp2[8];
+  uint16_t  MessageLength;
+MESSAGE_HEADER();
+  MESSAGE_HEADER(uint8_t data[]);
+  MESSAGE_HEADER( NNF_Constants::TransactionCode  TransactionCode,uint32_t  LogTime,uint32_t  TraderId,uint16_t  ErrorCode,);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ GR_REQUEST
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint16_t Box_ID;
+  uint8_t BrokerID[5];
+  uint8_t Filler;
+  GR_REQUEST(uint8_t data[]);
+  GR_REQUEST( uint16_t Box_ID,uint8_t BrokerID[],);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ GR_RESPONSE
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint16_t Box_ID;
+  uint8_t BrokerID[5];
+  uint8_t Filler;
+  uint8_t IP_Address[16];
+  uint32_t Port;
+  uint8_t Session_Key[8];
+  GR_RESPONSE(uint8_t data[]);
+  GR_RESPONSE( uint16_t Box_ID,uint8_t BrokerID[],uint8_t IP_Address[],uint32_t Port,uint8_t Session_Key[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ BOX_SIGN_ON_REQUEST_IN
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint16_t  BoxId;
+  uint8_t  BrokerId[5];
+  uint8_t Reserved[5];
+  uint8_t SessionKey[8];
+  BOX_SIGN_ON_REQUEST_IN(uint8_t data[]);
+  BOX_SIGN_ON_REQUEST_IN( uint16_t  BoxId,uint8_t  BrokerId[],uint8_t SessionKey[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ BOX_SIGN_ON_REQUEST_OUT
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint16_t BoxId;
+  uint8_t Reserved[10];
+  BOX_SIGN_ON_REQUEST_OUT(uint8_t data[]);
+  BOX_SIGN_ON_REQUEST_OUT( uint16_t BoxId,);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_SIGNON
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint32_t  UserID;
+  uint8_t Reserved1[8];
+  uint8_t Password2[8];
+  uint8_t Reserved3[8];
+  uint8_t NewPassword[8];
+  uint8_t TraderName[26];
+  uint32_t  LastPasswordChangeDate;
+  uint8_t BrokerID[5];
+  uint8_t Reserved4;
+  uint16_t  BranchID;
+  uint32_t  VersionNumber;
+  uint32_t  Batch2StartTime;
+  uint8_t HostSwitchContext;
+  uint8_t Colour[50];
+  uint8_t Reserved5;
+  uint16_t  UserType;
+  uint64_t  SequenceNumber;
+  uint8_t  WsClassName[14];
+  uint8_t  BrokerStatus;
+  uint8_t  ShowIndex;
+  ST_BROKER_ELIGIBILITY_PER_MKT  STRUCT;
+  uint16_t  MemberType;
+  uint8_t  ClearingStatus;
+  uint8_t  BrokerName[25];
+  uint8_t  Reserved6[16];
+  uint8_t  Reserved7[16];
+  uint8_t  Reserved8[16];
+  MS_SIGNON(uint8_t data[]);
+  MS_SIGNON( uint32_t  UserID,uint8_t Password2[],uint32_t  LastPasswordChangeDate,uint8_t BrokerID[],uint16_t  BranchID,uint32_t  VersionNumber,uint16_t  UserType,uint8_t  WsClassName[],ST_BROKER_ELIGIBILITY_PER_MKT  STRUCT,uint8_t  BrokerName[],);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_ERROR_RESPONSE
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint8_t Key[14];
+  uint8_t ErrorMessage[128];
+  MS_ERROR_RESPONSE(uint8_t data[]);
+  MS_ERROR_RESPONSE( uint8_t Key[],uint8_t ErrorMessage[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_SYSTEM_INFO_REQ
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint32_t LastUpdatePortfolioTIme;
+  MS_SYSTEM_INFO_REQ(uint8_t data[]);
+  MS_SYSTEM_INFO_REQ( );
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_SYSTEM_INFO_DATA
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  ST_MARKET_STATUS st_market_status;
+  ST_EX_MARKET_STATUS st_Ex_market_status;
+  ST_PL_MARKET_STATUS st_pl_market_status;
+  uint8_t UpdatePortfolio;
+  uint32_t MarketIndex;
+  uint16_t DefaultSettlementPeriod_Normal;
+  uint16_t DefaultSettlementPeriod_Spot;
+  uint16_t DefaultSettlementPeriod_Auction;
+  uint16_t CompetitorPeriod;
+  uint16_t SolicitorPeriod;
+  uint16_t WarningPercent;
+  uint16_t VolumeFreezePercent;
+  uint16_t SnapQuoteTime;
+  uint8_t Reserved[2];
+  uint32_t BoardLotQuantity;
+  uint32_t TickSize;
+  uint16_t MaximumGtcDays;
+  ST_STOCK_ELIGIBLE_INDICATORS st_stock_eligible_indicators;
+  uint16_t DisclosedQuantityPercentAllowed;
+  uint32_t RiskFreeInterestRate;
+  MS_SYSTEM_INFO_DATA(uint8_t data[]);
+  MS_SYSTEM_INFO_DATA( ST_MARKET_STATUS st_market_status,ST_EX_MARKET_STATUS st_Ex_market_status,ST_PL_MARKET_STATUS st_pl_market_status,uint8_t UpdatePortfolio,uint32_t MarketIndex,uint16_t DefaultSettlementPeriod_Normal,uint16_t DefaultSettlementPeriod_Spot,uint16_t DefaultSettlementPeriod_Auction,uint16_t CompetitorPeriod,uint16_t SolicitorPeriod,uint16_t WarningPercent,uint16_t VolumeFreezePercent,uint16_t SnapQuoteTime,uint8_t Reserved[],uint32_t BoardLotQuantity,uint32_t TickSize,uint16_t MaximumGtcDays,ST_STOCK_ELIGIBLE_INDICATORS st_stock_eligible_indicators,uint16_t DisclosedQuantityPercentAllowed,uint32_t RiskFreeInterestRate);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ ST_MARKET_STATUS
+{
+  uint16_t  Normal;
+  uint16_t  Oddlot;
+  uint16_t  Spot;
+  uint16_t  Auction;
+ST_MARKET_STATUS();
+  ST_MARKET_STATUS(uint8_t data[]);
+  ST_MARKET_STATUS( uint16_t  Normal,uint16_t  Oddlot,uint16_t  Spot,uint16_t  Auction);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ ST_EX_MARKET_STATUS
+{
+  uint16_t  Normal;
+  uint16_t  Oddlot;
+  uint16_t  Spot;
+  uint16_t  Auction;
+ST_EX_MARKET_STATUS();
+  ST_EX_MARKET_STATUS(uint8_t data[]);
+  ST_EX_MARKET_STATUS( uint16_t  Normal,uint16_t  Oddlot,uint16_t  Spot,uint16_t  Auction);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ ST_PL_MARKET_STATUS
+{
+  uint16_t  Normal;
+  uint16_t  Oddlot;
+  uint16_t  Spot;
+  uint16_t  Auction;
+ST_PL_MARKET_STATUS();
+  ST_PL_MARKET_STATUS(uint8_t data[]);
+  ST_PL_MARKET_STATUS( uint16_t  Normal,uint16_t  Oddlot,uint16_t  Spot,uint16_t  Auction);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ ST_STOCK_ELIGIBLE_INDICATORS
+{
+  uint8_t Reserved1:5;
+  uint8_t BooksMerged:1;
+  uint8_t MinimumFill:1;
+  uint8_t AON:1;
+  uint8_t Reserved2:1;
+ST_STOCK_ELIGIBLE_INDICATORS();
+  ST_STOCK_ELIGIBLE_INDICATORS(uint8_t data[]);
+  ST_STOCK_ELIGIBLE_INDICATORS( uint8_t Reserved1,uint8_t BooksMerged,uint8_t MinimumFill,uint8_t AON,uint8_t Reserved2);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_UPDATE_LOCAL_DATABASE
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint32_t  LastUpdateSecurityTime;
+  uint32_t  LastUpdateParticipantTime;
+  uint32_t  LastUpdateInstrumentTime;
+  uint32_t  LastUpdateIndexTime;
+  uint8_t RequestForOpenOrders;
+  uint8_t Reserved;
+  ST_MARKET_STATUS  St_Market_Status;
+  ST_EX_MARKET_STATUS  St_Ex_Market_Status;
+  ST_PL_MARKET_STATUS  St_Pl_Market_Status;
+  MS_UPDATE_LOCAL_DATABASE(uint8_t data[]);
+  MS_UPDATE_LOCAL_DATABASE( uint32_t  LastUpdateSecurityTime,uint32_t  LastUpdateParticipantTime,uint32_t  LastUpdateInstrumentTime,uint32_t  LastUpdateIndexTime,uint8_t RequestForOpenOrders,uint8_t Reserved,ST_MARKET_STATUS  St_Market_Status,ST_EX_MARKET_STATUS  St_Ex_Market_Status,ST_PL_MARKET_STATUS  St_Pl_Market_Status);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ UPDATE_LDB_HEADER
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint8_t Reserved[2];
+  UPDATE_LDB_HEADER(uint8_t data[]);
+  UPDATE_LDB_HEADER( uint8_t Reserved[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ INNER_MESSAGE_HEADER
+{
+  uint32_t TraderId;
+  uint32_t LogTime;
+  uint8_t AlphaChar[2];
+  uint16_t  TransactionCode;
+  uint16_t ErrorCode;
+  uint64_t Timestamp;
+  uint8_t Timestamp1[8];
+  uint8_t Timestamp2[8];
+  uint16_t  MessageLength;
+INNER_MESSAGE_HEADER();
+  INNER_MESSAGE_HEADER(uint8_t data[]);
+  INNER_MESSAGE_HEADER( uint32_t TraderId,uint32_t LogTime,uint8_t AlphaChar[],uint16_t  TransactionCode,uint16_t ErrorCode,uint64_t Timestamp,uint8_t Timestamp1[],uint8_t Timestamp2[],uint16_t  MessageLength);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ UPDATE_LDB_DATA
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  INNER_MESSAGE_HEADER inner_message_header;
+  uint8_t Data[436];
+  UPDATE_LDB_DATA(uint8_t data[]);
+  UPDATE_LDB_DATA( INNER_MESSAGE_HEADER inner_message_header,uint8_t Data[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ INDEX_DETAILS
+{
+  uint8_t IndexName[15];
+  uint32_t Token;
+  uint32_t LastUpdateDateTime;
+INDEX_DETAILS();
+  INDEX_DETAILS(uint8_t data[]);
+  INDEX_DETAILS( uint8_t IndexName[],uint32_t Token,uint32_t LastUpdateDateTime);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_DOWNLOAD_INDEX
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  INDEX_DETAILS Index_Details[17];
+  MS_DOWNLOAD_INDEX(uint8_t data[]);
+  MS_DOWNLOAD_INDEX( INDEX_DETAILS Index_Details[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ BCAST_INDEX_MAP_DETAILS
+{
+  uint8_t BcastName[26];
+  uint8_t ChangedName[10];
+  uint8_t DeleteFlag;
+  uint32_t LastUpdateDateTime;
+BCAST_INDEX_MAP_DETAILS();
+  BCAST_INDEX_MAP_DETAILS(uint8_t data[]);
+  BCAST_INDEX_MAP_DETAILS( uint8_t BcastName[],uint8_t ChangedName[],uint8_t DeleteFlag,uint32_t LastUpdateDateTime);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_DOWNLOAD_INDEX_MAP
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint16_t NoOfRecords;
+  BCAST_INDEX_MAP_DETAILS bcast_index_map_details[10];
+  MS_DOWNLOAD_INDEX_MAP(uint8_t data[]);
+  MS_DOWNLOAD_INDEX_MAP( uint16_t NoOfRecords,BCAST_INDEX_MAP_DETAILS bcast_index_map_details[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ UPDATE_LOCAL_DB_TRAILER
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint8_t Reserved[2];
+  UPDATE_LOCAL_DB_TRAILER(uint8_t data[]);
+  UPDATE_LOCAL_DB_TRAILER( uint8_t Reserved[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ EXCH_PORTFOLIO_REQ
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint32_t LastUpdateDtTime;
+  EXCH_PORTFOLIO_REQ(uint8_t data[]);
+  EXCH_PORTFOLIO_REQ( uint32_t LastUpdateDtTime);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ PORTFOLIO_DATA
+{
+  uint8_t Portfolio[10];
+  uint32_t Token;
+  uint32_t LastUpdateDtTime;
+  uint8_t DeleteFlag;
+PORTFOLIO_DATA();
+  PORTFOLIO_DATA(uint8_t data[]);
+  PORTFOLIO_DATA( uint8_t Portfolio[],uint32_t Token,uint32_t LastUpdateDtTime,uint8_t DeleteFlag);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ EXCH_PORTFOLIO_RESP
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint16_t NoOf_Records;
+  uint8_t MoreRecords;
+  uint8_t Filler;
+  PORTFOLIO_DATA portfoliio_data[15];
+  EXCH_PORTFOLIO_RESP(uint8_t data[]);
+  EXCH_PORTFOLIO_RESP( uint16_t NoOf_Records,uint8_t MoreRecords,uint8_t Filler,PORTFOLIO_DATA portfoliio_data[]);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_MESSAGE_DOWNLOAD
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  uint64_t SequenceNumber;
+  MS_MESSAGE_DOWNLOAD(uint8_t data[]);
+  MS_MESSAGE_DOWNLOAD( uint64_t SequenceNumber);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_MESSAGE_DOWNLOAD_HEADER
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  MS_MESSAGE_DOWNLOAD_HEADER(uint8_t data[]);
+  MS_MESSAGE_DOWNLOAD_HEADER( );
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_MESSAGE_DOWNLOAD_DATA
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  INNER_MESSAGE_HEADER Inner_message_header;
+  MS_MESSAGE_DOWNLOAD_DATA(uint8_t data[]);
+  MS_MESSAGE_DOWNLOAD_DATA( INNER_MESSAGE_HEADER Inner_message_header);
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_MESSAGE_DOWNLOAD_TRAILER
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  MS_MESSAGE_DOWNLOAD_TRAILER(uint8_t data[]);
+  MS_MESSAGE_DOWNLOAD_TRAILER( );
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ MS_SIGNOFF
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  MS_SIGNOFF(uint8_t data[]);
+  MS_SIGNOFF( );
+  void Flip_endian();
+  std::string toJSON();
+
+};
+struct
+ HEARTBEAT
+{
+  DIRECT_INTERFACE_HEADER Direct_Interface_Header;
+  MESSAGE_HEADER Message_Header;
+  HEARTBEAT(uint8_t data[]);
+  HEARTBEAT( );
+  void Flip_endian();
+  std::string toJSON();
+
+};

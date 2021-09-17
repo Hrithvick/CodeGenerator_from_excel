@@ -1,0 +1,128 @@
+case NNF_Constants::TransactionCode::GR_RESPONSE :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :GR_RESPONSEL: " << __LINE__ << ":" << __FILE__ "\n";
+GR_RESPONSE* ms=new GR_RESPONSE(data);
+ms->Flip_endian();
+sig_RECEIVE_GR_RESPONSE(ms);
+break;
+}
+case NNF_Constants::TransactionCode::BOX_SIGN_ON_REQUEST_OUT :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :BOX_SIGN_ON_REQUEST_OUTL: " << __LINE__ << ":" << __FILE__ "\n";
+BOX_SIGN_ON_REQUEST_OUT* ms=new BOX_SIGN_ON_REQUEST_OUT(data);
+ms->Flip_endian();
+sig_RECEIVE_BOX_SIGN_ON_REQUEST_OUT(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SIGN_ON_REQUEST_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_SIGNONL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_SIGNON* ms=new MS_SIGNON(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_SIGNON(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SIGN_ON_REQUEST_OUT :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_ERROR_RESPONSEL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_ERROR_RESPONSE* ms=new MS_ERROR_RESPONSE(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_ERROR_RESPONSE(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SYSTEM_INFORMATION_OUT :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_SYSTEM_INFO_DATAL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_SYSTEM_INFO_DATA* ms=new MS_SYSTEM_INFO_DATA(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_SYSTEM_INFO_DATA(ms);
+break;
+}
+case NNF_Constants::TransactionCode::UPDATE_LOCALDB_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_UPDATE_LOCAL_DATABASEL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_UPDATE_LOCAL_DATABASE* ms=new MS_UPDATE_LOCAL_DATABASE(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_UPDATE_LOCAL_DATABASE(ms);
+break;
+}
+case NNF_Constants::TransactionCode::UPDATE_LOCALDB_HEADER :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :UPDATE_LDB_HEADERL: " << __LINE__ << ":" << __FILE__ "\n";
+UPDATE_LDB_HEADER* ms=new UPDATE_LDB_HEADER(data);
+ms->Flip_endian();
+sig_RECEIVE_UPDATE_LDB_HEADER(ms);
+break;
+}
+case NNF_Constants::TransactionCode::UPDATE_LOCALDB_DATA :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :UPDATE_LDB_DATAL: " << __LINE__ << ":" << __FILE__ "\n";
+UPDATE_LDB_DATA* ms=new UPDATE_LDB_DATA(data);
+ms->Flip_endian();
+sig_RECEIVE_UPDATE_LDB_DATA(ms);
+break;
+}
+case NNF_Constants::TransactionCode::BCAST_INDEX_MSTR_CHG  :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_DOWNLOAD_INDEXL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_DOWNLOAD_INDEX* ms=new MS_DOWNLOAD_INDEX(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_DOWNLOAD_INDEX(ms);
+break;
+}
+case NNF_Constants::TransactionCode::BCAST_INDEX_MAP_TABLE  :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_DOWNLOAD_INDEX_MAPL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_DOWNLOAD_INDEX_MAP* ms=new MS_DOWNLOAD_INDEX_MAP(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_DOWNLOAD_INDEX_MAP(ms);
+break;
+}
+case NNF_Constants::TransactionCode::UPDATE_LOCALDB_TRAILER :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :UPDATE_LOCAL_DB_TRAILERL: " << __LINE__ << ":" << __FILE__ "\n";
+UPDATE_LOCAL_DB_TRAILER* ms=new UPDATE_LOCAL_DB_TRAILER(data);
+ms->Flip_endian();
+sig_RECEIVE_UPDATE_LOCAL_DB_TRAILER(ms);
+break;
+}
+case NNF_Constants::TransactionCode::EXCH_PORTF_OUT :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :EXCH_PORTFOLIO_RESPL: " << __LINE__ << ":" << __FILE__ "\n";
+EXCH_PORTFOLIO_RESP* ms=new EXCH_PORTFOLIO_RESP(data);
+ms->Flip_endian();
+sig_RECEIVE_EXCH_PORTFOLIO_RESP(ms);
+break;
+}
+case NNF_Constants::TransactionCode::HEADER_RECORD :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_MESSAGE_DOWNLOAD_HEADERL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_MESSAGE_DOWNLOAD_HEADER* ms=new MS_MESSAGE_DOWNLOAD_HEADER(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_MESSAGE_DOWNLOAD_HEADER(ms);
+break;
+}
+case NNF_Constants::TransactionCode::MESSAGE_RECORD :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_MESSAGE_DOWNLOAD_DATAL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_MESSAGE_DOWNLOAD_DATA* ms=new MS_MESSAGE_DOWNLOAD_DATA(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_MESSAGE_DOWNLOAD_DATA(ms);
+break;
+}
+case NNF_Constants::TransactionCode::TRAILER_RECORD :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_MESSAGE_DOWNLOAD_TRAILERL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_MESSAGE_DOWNLOAD_TRAILER* ms=new MS_MESSAGE_DOWNLOAD_TRAILER(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_MESSAGE_DOWNLOAD_TRAILER(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SIGN_OFF_REQUEST_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_SIGNOFFL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_SIGNOFF* ms=new MS_SIGNOFF(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_SIGNOFF(ms);
+break;
+}

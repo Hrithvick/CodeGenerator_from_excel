@@ -1,0 +1,1411 @@
+TEST(DIRECT_INTERFACE_HEADER_Test,DIRECT_INTERFACE_HEADER_by_Bytes)
+{
+uint8_t data[sizeof(DIRECT_INTERFACE_HEADER)]={ ,2,3,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+DIRECT_INTERFACE_HEADER message(data);
+EXPECT_EQ(message.Length,770);
+EXPECT_EQ(message. Sequence_number,16843009);
+for (int j = 0; j < sizeof(message. Checksum_MD5); j++)
+{
+EXPECT_EQ(message. Checksum_MD5[j],4);
+}
+
+}
+TEST(DIRECT_INTERFACE_HEADER_Test,DIRECT_INTERFACE_HEADER_by_value)
+{
+uint8_t data[sizeof(DIRECT_INTERFACE_HEADER)]={ ,2,3,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+DIRECT_INTERFACE_HEADER message0(data);
+DIRECT_INTERFACE_HEADER message1( message0.Length);
+EXPECT_EQ(message1.Length,770);
+EXPECT_EQ(message1. Sequence_number,0);
+for (int j = 0; j < sizeof(message1. Checksum_MD5); j++)
+{
+EXPECT_EQ(message1. Checksum_MD5[j],0);
+}
+
+}
+TEST(DIRECT_INTERFACE_HEADER_Test,Flip_endian)
+{
+uint8_t data[sizeof(DIRECT_INTERFACE_HEADER)]={ ,2,3,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+DIRECT_INTERFACE_HEADER message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Length,515);
+EXPECT_EQ(message. Sequence_number,16843009);
+for (int j = 0; j < sizeof(message. Checksum_MD5); j++)
+{
+EXPECT_EQ(message. Checksum_MD5[j],4);
+}
+
+}
+TEST(MESSAGE_HEADER_Test,MESSAGE_HEADER_by_Bytes)
+{
+uint8_t data[sizeof(MESSAGE_HEADER)]={ ,1,4,0,0,0,0,0,0,1,1,1,4,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5};
+MESSAGE_HEADER message(data);
+EXPECT_EQ(message. TransactionCode,1025);
+EXPECT_EQ(message.LogTime,0);
+for (int j = 0; j < sizeof(message.AlphaChar); j++)
+{
+EXPECT_EQ(message.AlphaChar[j],0);
+}
+EXPECT_EQ(message.TraderId,67174657);
+EXPECT_EQ(message.ErrorCode,256);
+EXPECT_EQ(message.Timestamp,4294967296);
+for (int j = 0; j < sizeof(message.TimeStamp1); j++)
+{
+EXPECT_EQ(message.TimeStamp1[j],0);
+}
+for (int j = 0; j < sizeof(message.TimeStamp2); j++)
+{
+EXPECT_EQ(message.TimeStamp2[j],0);
+}
+EXPECT_EQ(message.MessageLength,1285);
+
+}
+TEST(MESSAGE_HEADER_Test,MESSAGE_HEADER_by_value)
+{
+uint8_t data[sizeof(MESSAGE_HEADER)]={ ,1,4,0,0,0,0,0,0,1,1,1,4,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5};
+MESSAGE_HEADER message0(data);
+MESSAGE_HEADER message1( message0. TransactionCode,message0.LogTime,message0.TraderId,message0.ErrorCode);
+EXPECT_EQ(message1. TransactionCode,1025);
+EXPECT_EQ(message1.LogTime,0);
+for (int j = 0; j < sizeof(message1.AlphaChar); j++)
+{
+EXPECT_EQ(message1.AlphaChar[j],' ');
+}
+EXPECT_EQ(message1.TraderId,67174657);
+EXPECT_EQ(message1.ErrorCode,256);
+EXPECT_EQ(message1.Timestamp,0);
+for (int j = 0; j < sizeof(message1.TimeStamp1); j++)
+{
+EXPECT_EQ(message1.TimeStamp1[j],' ');
+}
+for (int j = 0; j < sizeof(message1.TimeStamp2); j++)
+{
+EXPECT_EQ(message1.TimeStamp2[j],' ');
+}
+EXPECT_EQ(message1.MessageLength,0);
+
+}
+TEST(MESSAGE_HEADER_Test,Flip_endian)
+{
+uint8_t data[sizeof(MESSAGE_HEADER)]={ ,1,4,0,0,0,0,0,0,1,1,1,4,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5};
+MESSAGE_HEADER message(data);
+message.Flip_endian();
+EXPECT_EQ(message. TransactionCode,260);
+EXPECT_EQ(message.LogTime,0);
+for (int j = 0; j < sizeof(message.AlphaChar); j++)
+{
+EXPECT_EQ(message.AlphaChar[j],0);
+}
+EXPECT_EQ(message.TraderId,16843012);
+EXPECT_EQ(message.ErrorCode,1);
+EXPECT_EQ(message.Timestamp,16777216);
+for (int j = 0; j < sizeof(message.TimeStamp1); j++)
+{
+EXPECT_EQ(message.TimeStamp1[j],0);
+}
+for (int j = 0; j < sizeof(message.TimeStamp2); j++)
+{
+EXPECT_EQ(message.TimeStamp2[j],0);
+}
+EXPECT_EQ(message.MessageLength,1285);
+
+}
+TEST(GR_REQUEST_Test,GR_REQUEST_by_Bytes)
+{
+uint8_t data[sizeof(GR_REQUEST)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,22,22,22,22,22,2};
+GR_REQUEST message(data);
+EXPECT_EQ(message.Box_ID,1);
+for (int j = 0; j < sizeof(message.BrokerID); j++)
+{
+EXPECT_EQ(message.BrokerID[j],22);
+}
+EXPECT_EQ(message.Filler,2);
+
+}
+TEST(GR_REQUEST_Test,GR_REQUEST_by_value)
+{
+uint8_t data[sizeof(GR_REQUEST)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,22,22,22,22,22,2};
+GR_REQUEST message0(data);
+GR_REQUEST message1( message0.Box_ID,message0.BrokerID);
+EXPECT_EQ(message1.Box_ID,1);
+for (int j = 0; j < sizeof(message1.BrokerID); j++)
+{
+EXPECT_EQ(message1.BrokerID[j],22);
+}
+EXPECT_EQ(message1.Filler,' ');
+
+}
+TEST(GR_REQUEST_Test,Flip_endian)
+{
+uint8_t data[sizeof(GR_REQUEST)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,22,22,22,22,22,2};
+GR_REQUEST message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Box_ID,256);
+for (int j = 0; j < sizeof(message.BrokerID); j++)
+{
+EXPECT_EQ(message.BrokerID[j],22);
+}
+EXPECT_EQ(message.Filler,2);
+
+}
+TEST(GR_RESPONSE_Test,GR_RESPONSE_by_Bytes)
+{
+uint8_t data[sizeof(GR_RESPONSE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,7,6,6,6,6,6,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,6,4,8,0,5,5,5,5,5,5,5,5};
+GR_RESPONSE message(data);
+EXPECT_EQ(message.Box_ID,1797);
+for (int j = 0; j < sizeof(message.BrokerID); j++)
+{
+EXPECT_EQ(message.BrokerID[j],6);
+}
+EXPECT_EQ(message.Filler,7);
+for (int j = 0; j < sizeof(message.IP_Address); j++)
+{
+EXPECT_EQ(message.IP_Address[j],8);
+}
+EXPECT_EQ(message.Port,525318);
+for (int j = 0; j < sizeof(message.Session_Key); j++)
+{
+EXPECT_EQ(message.Session_Key[j],5);
+}
+
+}
+TEST(GR_RESPONSE_Test,GR_RESPONSE_by_value)
+{
+uint8_t data[sizeof(GR_RESPONSE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,7,6,6,6,6,6,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,6,4,8,0,5,5,5,5,5,5,5,5};
+GR_RESPONSE message0(data);
+GR_RESPONSE message1( message0.Box_ID,message0.BrokerID,message0.IP_Address,message0.Port,message0.Session_Key);
+EXPECT_EQ(message1.Box_ID,1797);
+for (int j = 0; j < sizeof(message1.BrokerID); j++)
+{
+EXPECT_EQ(message1.BrokerID[j],6);
+}
+EXPECT_EQ(message1.Filler,' ');
+for (int j = 0; j < sizeof(message1.IP_Address); j++)
+{
+EXPECT_EQ(message1.IP_Address[j],8);
+}
+EXPECT_EQ(message1.Port,525318);
+for (int j = 0; j < sizeof(message1.Session_Key); j++)
+{
+EXPECT_EQ(message1.Session_Key[j],5);
+}
+
+}
+TEST(GR_RESPONSE_Test,Flip_endian)
+{
+uint8_t data[sizeof(GR_RESPONSE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,7,6,6,6,6,6,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,6,4,8,0,5,5,5,5,5,5,5,5};
+GR_RESPONSE message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Box_ID,1287);
+for (int j = 0; j < sizeof(message.BrokerID); j++)
+{
+EXPECT_EQ(message.BrokerID[j],6);
+}
+EXPECT_EQ(message.Filler,7);
+for (int j = 0; j < sizeof(message.IP_Address); j++)
+{
+EXPECT_EQ(message.IP_Address[j],8);
+}
+EXPECT_EQ(message.Port,100927488);
+for (int j = 0; j < sizeof(message.Session_Key); j++)
+{
+EXPECT_EQ(message.Session_Key[j],5);
+}
+
+}
+TEST(BOX_SIGN_ON_REQUEST_IN_Test,BOX_SIGN_ON_REQUEST_IN_by_Bytes)
+{
+uint8_t data[sizeof(BOX_SIGN_ON_REQUEST_IN)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,01,02,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+BOX_SIGN_ON_REQUEST_IN message(data);
+EXPECT_EQ(message. BoxId,513);
+for (int j = 0; j < sizeof(message. BrokerId); j++)
+{
+EXPECT_EQ(message. BrokerId[j],1);
+}
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],1);
+}
+for (int j = 0; j < sizeof(message.SessionKey); j++)
+{
+EXPECT_EQ(message.SessionKey[j],1);
+}
+
+}
+TEST(BOX_SIGN_ON_REQUEST_IN_Test,BOX_SIGN_ON_REQUEST_IN_by_value)
+{
+uint8_t data[sizeof(BOX_SIGN_ON_REQUEST_IN)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,01,02,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+BOX_SIGN_ON_REQUEST_IN message0(data);
+BOX_SIGN_ON_REQUEST_IN message1( message0. BoxId,message0. BrokerId,message0.SessionKey);
+EXPECT_EQ(message1. BoxId,513);
+for (int j = 0; j < sizeof(message1. BrokerId); j++)
+{
+EXPECT_EQ(message1. BrokerId[j],1);
+}
+for (int j = 0; j < sizeof(message1.Reserved); j++)
+{
+EXPECT_EQ(message1.Reserved[j],' ');
+}
+for (int j = 0; j < sizeof(message1.SessionKey); j++)
+{
+EXPECT_EQ(message1.SessionKey[j],1);
+}
+
+}
+TEST(BOX_SIGN_ON_REQUEST_IN_Test,Flip_endian)
+{
+uint8_t data[sizeof(BOX_SIGN_ON_REQUEST_IN)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,01,02,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+BOX_SIGN_ON_REQUEST_IN message(data);
+message.Flip_endian();
+EXPECT_EQ(message. BoxId,258);
+for (int j = 0; j < sizeof(message. BrokerId); j++)
+{
+EXPECT_EQ(message. BrokerId[j],1);
+}
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],1);
+}
+for (int j = 0; j < sizeof(message.SessionKey); j++)
+{
+EXPECT_EQ(message.SessionKey[j],1);
+}
+
+}
+TEST(BOX_SIGN_ON_REQUEST_OUT_Test,BOX_SIGN_ON_REQUEST_OUT_by_Bytes)
+{
+uint8_t data[sizeof(BOX_SIGN_ON_REQUEST_OUT)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,3,3,3,3,3,3,3,3,3,3,3};
+BOX_SIGN_ON_REQUEST_OUT message(data);
+EXPECT_EQ(message.BoxId,772);
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],3);
+}
+
+}
+TEST(BOX_SIGN_ON_REQUEST_OUT_Test,BOX_SIGN_ON_REQUEST_OUT_by_value)
+{
+uint8_t data[sizeof(BOX_SIGN_ON_REQUEST_OUT)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,3,3,3,3,3,3,3,3,3,3,3};
+BOX_SIGN_ON_REQUEST_OUT message0(data);
+BOX_SIGN_ON_REQUEST_OUT message1( message0.BoxId);
+EXPECT_EQ(message1.BoxId,772);
+for (int j = 0; j < sizeof(message1.Reserved); j++)
+{
+EXPECT_EQ(message1.Reserved[j],' ');
+}
+
+}
+TEST(BOX_SIGN_ON_REQUEST_OUT_Test,Flip_endian)
+{
+uint8_t data[sizeof(BOX_SIGN_ON_REQUEST_OUT)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,3,3,3,3,3,3,3,3,3,3,3};
+BOX_SIGN_ON_REQUEST_OUT message(data);
+message.Flip_endian();
+EXPECT_EQ(message.BoxId,1027);
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],3);
+}
+
+}
+TEST(MS_SIGNON_Test,MS_SIGNON_by_Bytes)
+{
+uint8_t data[sizeof(MS_SIGNON)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,5,5,5,5,5,7,4,3,5,5,5,5,1,1,1,1,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,8,9,9,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,1,1,4,4,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
+MS_SIGNON message(data);
+EXPECT_EQ(message.UserID,67305985);
+for (int j = 0; j < sizeof(message.Reserved1); j++)
+{
+EXPECT_EQ(message.Reserved1[j],3);
+}
+for (int j = 0; j < sizeof(message.Password2); j++)
+{
+EXPECT_EQ(message.Password2[j],4);
+}
+for (int j = 0; j < sizeof(message.Reserved3); j++)
+{
+EXPECT_EQ(message.Reserved3[j],5);
+}
+for (int j = 0; j < sizeof(message.NewPassword); j++)
+{
+EXPECT_EQ(message.NewPassword[j],3);
+}
+for (int j = 0; j < sizeof(message.TraderName); j++)
+{
+EXPECT_EQ(message.TraderName[j],3);
+}
+EXPECT_EQ(message.LastPasswordChangeDate,33686018);
+for (int j = 0; j < sizeof(message.BrokerID); j++)
+{
+EXPECT_EQ(message.BrokerID[j],5);
+}
+EXPECT_EQ(message.Reserved4,7);
+EXPECT_EQ(message.BranchID,772);
+EXPECT_EQ(message.VersionNumber,84215045);
+EXPECT_EQ(message.Batch2StartTime,16843009);
+EXPECT_EQ(message.HostSwitchContext,6);
+for (int j = 0; j < sizeof(message.Colour); j++)
+{
+EXPECT_EQ(message.Colour[j],5);
+}
+EXPECT_EQ(message.Reserved5,8);
+EXPECT_EQ(message.UserType,2313);
+EXPECT_EQ(message. SequenceNumber,4294967296);
+for (int j = 0; j < sizeof(message.WsClassName); j++)
+{
+EXPECT_EQ(message.WsClassName[j],1);
+}
+EXPECT_EQ(message.BrokerStatus,2);
+EXPECT_EQ(message.ShowIndex,3);
+EXPECT_EQ(message.STRUCT,257);
+EXPECT_EQ(message.MemberType,1028);
+EXPECT_EQ(message.ClearingStatus,1);
+for (int j = 0; j < sizeof(message.BrokerName); j++)
+{
+EXPECT_EQ(message.BrokerName[j],2);
+}
+for (int j = 0; j < sizeof(message.Reserved6); j++)
+{
+EXPECT_EQ(message.Reserved6[j],3);
+}
+for (int j = 0; j < sizeof(message. Reserved7); j++)
+{
+EXPECT_EQ(message. Reserved7[j],4);
+}
+for (int j = 0; j < sizeof(message.Reserved8); j++)
+{
+EXPECT_EQ(message.Reserved8[j],5);
+}
+
+}
+TEST(MS_SIGNON_Test,MS_SIGNON_by_value)
+{
+uint8_t data[sizeof(MS_SIGNON)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,5,5,5,5,5,7,4,3,5,5,5,5,1,1,1,1,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,8,9,9,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,1,1,4,4,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
+MS_SIGNON message0(data);
+MS_SIGNON message1( message0.UserID,message0.Password2,message0.LastPasswordChangeDate,message0.BrokerID,message0.BranchID,message0.VersionNumber,message0.UserType,message0.WsClassName,message0.STRUCT,message0.BrokerName);
+EXPECT_EQ(message1.UserID,67305985);
+for (int j = 0; j < sizeof(message1.Reserved1); j++)
+{
+EXPECT_EQ(message1.Reserved1[j],' ');
+}
+for (int j = 0; j < sizeof(message1.Password2); j++)
+{
+EXPECT_EQ(message1.Password2[j],4);
+}
+for (int j = 0; j < sizeof(message1.Reserved3); j++)
+{
+EXPECT_EQ(message1.Reserved3[j],' ');
+}
+for (int j = 0; j < sizeof(message1.NewPassword); j++)
+{
+EXPECT_EQ(message1.NewPassword[j],' ');
+}
+for (int j = 0; j < sizeof(message1.TraderName); j++)
+{
+EXPECT_EQ(message1.TraderName[j],' ');
+}
+EXPECT_EQ(message1.LastPasswordChangeDate,33686018);
+for (int j = 0; j < sizeof(message1.BrokerID); j++)
+{
+EXPECT_EQ(message1.BrokerID[j],5);
+}
+EXPECT_EQ(message1.Reserved4,' ');
+EXPECT_EQ(message1.BranchID,772);
+EXPECT_EQ(message1.VersionNumber,84215045);
+EXPECT_EQ(message1.Batch2StartTime,' ');
+EXPECT_EQ(message1.HostSwitchContext,' ');
+for (int j = 0; j < sizeof(message1.Colour); j++)
+{
+EXPECT_EQ(message1.Colour[j],' ');
+}
+EXPECT_EQ(message1.Reserved5,' ');
+EXPECT_EQ(message1.UserType,2313);
+EXPECT_EQ(message1. SequenceNumber,' ');
+for (int j = 0; j < sizeof(message1.WsClassName); j++)
+{
+EXPECT_EQ(message1.WsClassName[j],1);
+}
+EXPECT_EQ(message1.BrokerStatus,' ');
+EXPECT_EQ(message1.ShowIndex,' ');
+EXPECT_EQ(message1.STRUCT,257);
+EXPECT_EQ(message1.MemberType,' ');
+EXPECT_EQ(message1.ClearingStatus,' ');
+for (int j = 0; j < sizeof(message1.BrokerName); j++)
+{
+EXPECT_EQ(message1.BrokerName[j],2);
+}
+for (int j = 0; j < sizeof(message1.Reserved6); j++)
+{
+EXPECT_EQ(message1.Reserved6[j],' ');
+}
+for (int j = 0; j < sizeof(message1. Reserved7); j++)
+{
+EXPECT_EQ(message1. Reserved7[j],' ');
+}
+for (int j = 0; j < sizeof(message1.Reserved8); j++)
+{
+EXPECT_EQ(message1.Reserved8[j],' ');
+}
+
+}
+TEST(MS_SIGNON_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_SIGNON)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,5,5,5,5,5,7,4,3,5,5,5,5,1,1,1,1,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,8,9,9,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,1,1,4,4,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
+MS_SIGNON message(data);
+message.Flip_endian();
+EXPECT_EQ(message.UserID,16909060);
+for (int j = 0; j < sizeof(message.Reserved1); j++)
+{
+EXPECT_EQ(message.Reserved1[j],3);
+}
+for (int j = 0; j < sizeof(message.Password2); j++)
+{
+EXPECT_EQ(message.Password2[j],4);
+}
+for (int j = 0; j < sizeof(message.Reserved3); j++)
+{
+EXPECT_EQ(message.Reserved3[j],5);
+}
+for (int j = 0; j < sizeof(message.NewPassword); j++)
+{
+EXPECT_EQ(message.NewPassword[j],3);
+}
+for (int j = 0; j < sizeof(message.TraderName); j++)
+{
+EXPECT_EQ(message.TraderName[j],3);
+}
+EXPECT_EQ(message.LastPasswordChangeDate,33686018);
+for (int j = 0; j < sizeof(message.BrokerID); j++)
+{
+EXPECT_EQ(message.BrokerID[j],5);
+}
+EXPECT_EQ(message.Reserved4,7);
+EXPECT_EQ(message.BranchID,1027);
+EXPECT_EQ(message.VersionNumber,84215045);
+EXPECT_EQ(message.Batch2StartTime,16843009);
+EXPECT_EQ(message.HostSwitchContext,6);
+for (int j = 0; j < sizeof(message.Colour); j++)
+{
+EXPECT_EQ(message.Colour[j],5);
+}
+EXPECT_EQ(message.Reserved5,8);
+EXPECT_EQ(message.UserType,2313);
+EXPECT_EQ(message. SequenceNumber,16777216);
+for (int j = 0; j < sizeof(message.WsClassName); j++)
+{
+EXPECT_EQ(message.WsClassName[j],1);
+}
+EXPECT_EQ(message.BrokerStatus,2);
+EXPECT_EQ(message.ShowIndex,3);
+EXPECT_EQ(message.STRUCT,257);
+EXPECT_EQ(message.MemberType,1028);
+EXPECT_EQ(message.ClearingStatus,1);
+for (int j = 0; j < sizeof(message.BrokerName); j++)
+{
+EXPECT_EQ(message.BrokerName[j],2);
+}
+for (int j = 0; j < sizeof(message.Reserved6); j++)
+{
+EXPECT_EQ(message.Reserved6[j],3);
+}
+for (int j = 0; j < sizeof(message. Reserved7); j++)
+{
+EXPECT_EQ(message. Reserved7[j],4);
+}
+for (int j = 0; j < sizeof(message.Reserved8); j++)
+{
+EXPECT_EQ(message.Reserved8[j],5);
+}
+
+}
+TEST(MS_ERROR_RESPONSE_Test,MS_ERROR_RESPONSE_by_Bytes)
+{
+uint8_t data[sizeof(MS_ERROR_RESPONSE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_ERROR_RESPONSE message(data);
+for (int j = 0; j < sizeof(message.Key); j++)
+{
+EXPECT_EQ(message.Key[j],0);
+}
+for (int j = 0; j < sizeof(message.ErrorMessage); j++)
+{
+EXPECT_EQ(message.ErrorMessage[j],0);
+}
+
+}
+TEST(MS_ERROR_RESPONSE_Test,MS_ERROR_RESPONSE_by_value)
+{
+uint8_t data[sizeof(MS_ERROR_RESPONSE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_ERROR_RESPONSE message0(data);
+MS_ERROR_RESPONSE message1( message0.Key,message0.ErrorMessage);
+for (int j = 0; j < sizeof(message1.Key); j++)
+{
+EXPECT_EQ(message1.Key[j],0);
+}
+for (int j = 0; j < sizeof(message1.ErrorMessage); j++)
+{
+EXPECT_EQ(message1.ErrorMessage[j],0);
+}
+
+}
+TEST(MS_ERROR_RESPONSE_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_ERROR_RESPONSE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_ERROR_RESPONSE message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.Key); j++)
+{
+EXPECT_EQ(message.Key[j],0);
+}
+for (int j = 0; j < sizeof(message.ErrorMessage); j++)
+{
+EXPECT_EQ(message.ErrorMessage[j],0);
+}
+
+}
+TEST(MS_SYSTEM_INFO_REQ_Test,MS_SYSTEM_INFO_REQ_by_Bytes)
+{
+uint8_t data[sizeof(MS_SYSTEM_INFO_REQ)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0};
+MS_SYSTEM_INFO_REQ message(data);
+EXPECT_EQ(message.LastUpdatePortfolioTIme,65793);
+
+}
+TEST(MS_SYSTEM_INFO_REQ_Test,MS_SYSTEM_INFO_REQ_by_value)
+{
+uint8_t data[sizeof(MS_SYSTEM_INFO_REQ)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0};
+MS_SYSTEM_INFO_REQ message0(data);
+MS_SYSTEM_INFO_REQ message1( );
+EXPECT_EQ(message1.LastUpdatePortfolioTIme,"0000");
+
+}
+TEST(MS_SYSTEM_INFO_REQ_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_SYSTEM_INFO_REQ)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0};
+MS_SYSTEM_INFO_REQ message(data);
+message.Flip_endian();
+EXPECT_EQ(message.LastUpdatePortfolioTIme,16843008);
+
+}
+TEST(MS_SYSTEM_INFO_DATA_Test,MS_SYSTEM_INFO_DATA_by_Bytes)
+{
+uint8_t data[sizeof(MS_SYSTEM_INFO_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,2,2,1,2,2,3,3,4,4,5,5,6,6,1,1,1,2,3,4,2,2,1,0,1,1,0,0,1,1,2,4,3,1};
+MS_SYSTEM_INFO_DATA message(data);
+EXPECT_EQ(message.st_market_status,None);
+EXPECT_EQ(message.st_Ex_market_status,None);
+EXPECT_EQ(message.st_pl_market_status,None);
+EXPECT_EQ(message.UpdatePortfolio,1);
+EXPECT_EQ(message.MarketIndex,65537);
+EXPECT_EQ(message.DefaultSettlementPeriod_Normal,0);
+EXPECT_EQ(message.DefaultSettlementPeriod_Spot,513);
+EXPECT_EQ(message.DefaultSettlementPeriod_Auction,258);
+EXPECT_EQ(message.CompetitorPeriod,514);
+EXPECT_EQ(message.SolicitorPeriod,771);
+EXPECT_EQ(message.WarningPercent,1028);
+EXPECT_EQ(message.VolumeFreezePercent,1285);
+EXPECT_EQ(message.SnapQuoteTime,1542);
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],1);
+}
+EXPECT_EQ(message.BoardLotQuantity,67305985);
+EXPECT_EQ(message.TickSize,66050);
+EXPECT_EQ(message.MaximumGtcDays,257);
+EXPECT_EQ(message.st_stock_eligible_indicators,0);
+EXPECT_EQ(message.DisclosedQuantityPercentAllowed,257);
+EXPECT_EQ(message.RiskFreeInterestRate,16974850);
+
+}
+TEST(MS_SYSTEM_INFO_DATA_Test,MS_SYSTEM_INFO_DATA_by_value)
+{
+uint8_t data[sizeof(MS_SYSTEM_INFO_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,2,2,1,2,2,3,3,4,4,5,5,6,6,1,1,1,2,3,4,2,2,1,0,1,1,0,0,1,1,2,4,3,1};
+MS_SYSTEM_INFO_DATA message0(data);
+MS_SYSTEM_INFO_DATA message1( message0.st_market_status,message0.st_Ex_market_status,message0.st_pl_market_status,message0.UpdatePortfolio,message0.MarketIndex,message0.DefaultSettlementPeriod_Normal,message0.DefaultSettlementPeriod_Spot,message0.DefaultSettlementPeriod_Auction,message0.CompetitorPeriod,message0.SolicitorPeriod,message0.WarningPercent,message0.VolumeFreezePercent,message0.SnapQuoteTime,message0.Reserved,message0.BoardLotQuantity,message0.TickSize,message0.MaximumGtcDays,message0.st_stock_eligible_indicators,message0.DisclosedQuantityPercentAllowed,message0.RiskFreeInterestRate);
+EXPECT_EQ(message1.st_market_status,None);
+EXPECT_EQ(message1.st_Ex_market_status,None);
+EXPECT_EQ(message1.st_pl_market_status,None);
+EXPECT_EQ(message1.UpdatePortfolio,1);
+EXPECT_EQ(message1.MarketIndex,65537);
+EXPECT_EQ(message1.DefaultSettlementPeriod_Normal,0);
+EXPECT_EQ(message1.DefaultSettlementPeriod_Spot,513);
+EXPECT_EQ(message1.DefaultSettlementPeriod_Auction,258);
+EXPECT_EQ(message1.CompetitorPeriod,514);
+EXPECT_EQ(message1.SolicitorPeriod,771);
+EXPECT_EQ(message1.WarningPercent,1028);
+EXPECT_EQ(message1.VolumeFreezePercent,1285);
+EXPECT_EQ(message1.SnapQuoteTime,1542);
+for (int j = 0; j < sizeof(message1.Reserved); j++)
+{
+EXPECT_EQ(message1.Reserved[j],1);
+}
+EXPECT_EQ(message1.BoardLotQuantity,67305985);
+EXPECT_EQ(message1.TickSize,66050);
+EXPECT_EQ(message1.MaximumGtcDays,257);
+EXPECT_EQ(message1.st_stock_eligible_indicators,0);
+EXPECT_EQ(message1.DisclosedQuantityPercentAllowed,257);
+EXPECT_EQ(message1.RiskFreeInterestRate,16974850);
+
+}
+TEST(MS_SYSTEM_INFO_DATA_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_SYSTEM_INFO_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,2,2,1,2,2,3,3,4,4,5,5,6,6,1,1,1,2,3,4,2,2,1,0,1,1,0,0,1,1,2,4,3,1};
+MS_SYSTEM_INFO_DATA message(data);
+message.Flip_endian();
+EXPECT_EQ(message.st_market_status,None);
+EXPECT_EQ(message.st_Ex_market_status,None);
+EXPECT_EQ(message.st_pl_market_status,None);
+EXPECT_EQ(message.UpdatePortfolio,1);
+EXPECT_EQ(message.MarketIndex,16777472);
+EXPECT_EQ(message.DefaultSettlementPeriod_Normal,0);
+EXPECT_EQ(message.DefaultSettlementPeriod_Spot,258);
+EXPECT_EQ(message.DefaultSettlementPeriod_Auction,513);
+EXPECT_EQ(message.CompetitorPeriod,514);
+EXPECT_EQ(message.SolicitorPeriod,771);
+EXPECT_EQ(message.WarningPercent,1028);
+EXPECT_EQ(message.VolumeFreezePercent,1285);
+EXPECT_EQ(message.SnapQuoteTime,1542);
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],1);
+}
+EXPECT_EQ(message.BoardLotQuantity,16909060);
+EXPECT_EQ(message.TickSize,33685760);
+EXPECT_EQ(message.MaximumGtcDays,257);
+EXPECT_EQ(message.st_stock_eligible_indicators,0);
+EXPECT_EQ(message.DisclosedQuantityPercentAllowed,257);
+EXPECT_EQ(message.RiskFreeInterestRate,33817345);
+
+}
+TEST(ST_MARKET_STATUS_Test,ST_MARKET_STATUS_by_Bytes)
+{
+uint8_t data[sizeof(ST_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_MARKET_STATUS message(data);
+EXPECT_EQ(message.Normal,769);
+EXPECT_EQ(message.Oddlot,1025);
+EXPECT_EQ(message.Spot,1286);
+EXPECT_EQ(message. Auction,775);
+
+}
+TEST(ST_MARKET_STATUS_Test,ST_MARKET_STATUS_by_value)
+{
+uint8_t data[sizeof(ST_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_MARKET_STATUS message0(data);
+ST_MARKET_STATUS message1( message0.Normal,message0.Oddlot,message0.Spot,message0. Auction);
+EXPECT_EQ(message1.Normal,769);
+EXPECT_EQ(message1.Oddlot,1025);
+EXPECT_EQ(message1.Spot,1286);
+EXPECT_EQ(message1. Auction,775);
+
+}
+TEST(ST_MARKET_STATUS_Test,Flip_endian)
+{
+uint8_t data[sizeof(ST_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_MARKET_STATUS message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Normal,259);
+EXPECT_EQ(message.Oddlot,260);
+EXPECT_EQ(message.Spot,1541);
+EXPECT_EQ(message. Auction,1795);
+
+}
+TEST(ST_EX_MARKET_STATUS_Test,ST_EX_MARKET_STATUS_by_Bytes)
+{
+uint8_t data[sizeof(ST_EX_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_EX_MARKET_STATUS message(data);
+EXPECT_EQ(message.Normal,769);
+EXPECT_EQ(message.Oddlot,1025);
+EXPECT_EQ(message.Spot,1286);
+EXPECT_EQ(message. Auction,775);
+
+}
+TEST(ST_EX_MARKET_STATUS_Test,ST_EX_MARKET_STATUS_by_value)
+{
+uint8_t data[sizeof(ST_EX_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_EX_MARKET_STATUS message0(data);
+ST_EX_MARKET_STATUS message1( message0.Normal,message0.Oddlot,message0.Spot,message0. Auction);
+EXPECT_EQ(message1.Normal,769);
+EXPECT_EQ(message1.Oddlot,1025);
+EXPECT_EQ(message1.Spot,1286);
+EXPECT_EQ(message1. Auction,775);
+
+}
+TEST(ST_EX_MARKET_STATUS_Test,Flip_endian)
+{
+uint8_t data[sizeof(ST_EX_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_EX_MARKET_STATUS message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Normal,259);
+EXPECT_EQ(message.Oddlot,260);
+EXPECT_EQ(message.Spot,1541);
+EXPECT_EQ(message. Auction,1795);
+
+}
+TEST(ST_PL_MARKET_STATUS_Test,ST_PL_MARKET_STATUS_by_Bytes)
+{
+uint8_t data[sizeof(ST_PL_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_PL_MARKET_STATUS message(data);
+EXPECT_EQ(message.Normal,769);
+EXPECT_EQ(message.Oddlot,1025);
+EXPECT_EQ(message.Spot,1286);
+EXPECT_EQ(message. Auction,775);
+
+}
+TEST(ST_PL_MARKET_STATUS_Test,ST_PL_MARKET_STATUS_by_value)
+{
+uint8_t data[sizeof(ST_PL_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_PL_MARKET_STATUS message0(data);
+ST_PL_MARKET_STATUS message1( message0.Normal,message0.Oddlot,message0.Spot,message0. Auction);
+EXPECT_EQ(message1.Normal,769);
+EXPECT_EQ(message1.Oddlot,1025);
+EXPECT_EQ(message1.Spot,1286);
+EXPECT_EQ(message1. Auction,775);
+
+}
+TEST(ST_PL_MARKET_STATUS_Test,Flip_endian)
+{
+uint8_t data[sizeof(ST_PL_MARKET_STATUS)]={ ,1,3,1,4,6,5,7,3};
+ST_PL_MARKET_STATUS message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Normal,259);
+EXPECT_EQ(message.Oddlot,260);
+EXPECT_EQ(message.Spot,1541);
+EXPECT_EQ(message. Auction,1795);
+
+}
+TEST(ST_STOCK_ELIGIBLE_INDICATORS_Test,ST_STOCK_ELIGIBLE_INDICATORS_by_Bytes)
+{
+uint8_t data[sizeof(ST_STOCK_ELIGIBLE_INDICATORS)]={ };
+ST_STOCK_ELIGIBLE_INDICATORS message(data);
+EXPECT_EQ(message.Reserved1,None);
+EXPECT_EQ(message.BooksMerged,None);
+EXPECT_EQ(message.MinimumFill,None);
+EXPECT_EQ(message.AON,None);
+EXPECT_EQ(message.Reserved2,None);
+
+}
+TEST(ST_STOCK_ELIGIBLE_INDICATORS_Test,ST_STOCK_ELIGIBLE_INDICATORS_by_value)
+{
+uint8_t data[sizeof(ST_STOCK_ELIGIBLE_INDICATORS)]={ };
+ST_STOCK_ELIGIBLE_INDICATORS message0(data);
+ST_STOCK_ELIGIBLE_INDICATORS message1( message0.Reserved1,message0.BooksMerged,message0.MinimumFill,message0.AON,message0.Reserved2);
+EXPECT_EQ(message1.Reserved1,None);
+EXPECT_EQ(message1.BooksMerged,None);
+EXPECT_EQ(message1.MinimumFill,None);
+EXPECT_EQ(message1.AON,None);
+EXPECT_EQ(message1.Reserved2,None);
+
+}
+TEST(ST_STOCK_ELIGIBLE_INDICATORS_Test,Flip_endian)
+{
+uint8_t data[sizeof(ST_STOCK_ELIGIBLE_INDICATORS)]={ };
+ST_STOCK_ELIGIBLE_INDICATORS message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Reserved1,None);
+EXPECT_EQ(message.BooksMerged,None);
+EXPECT_EQ(message.MinimumFill,None);
+EXPECT_EQ(message.AON,None);
+EXPECT_EQ(message.Reserved2,None);
+
+}
+TEST(MS_UPDATE_LOCAL_DATABASE_Test,MS_UPDATE_LOCAL_DATABASE_by_Bytes)
+{
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,1,1,2,1,2,1,1,4,3,1,1,1,1,5,3};
+MS_UPDATE_LOCAL_DATABASE message(data);
+EXPECT_EQ(message.LastUpdateSecurityTime,16908545);
+EXPECT_EQ(message.LastUpdateParticipantTime,33620481);
+EXPECT_EQ(message.LastUpdateInstrumentTime,50594049);
+EXPECT_EQ(message.LastUpdateIndexTime,16843009);
+EXPECT_EQ(message.RequestForOpenOrders,5);
+EXPECT_EQ(message.Reserved,3);
+EXPECT_EQ(message.St_Market_Status,None);
+EXPECT_EQ(message. St_Ex_Market_Status,None);
+EXPECT_EQ(message. St_Pl_Market_Status,None);
+
+}
+TEST(MS_UPDATE_LOCAL_DATABASE_Test,MS_UPDATE_LOCAL_DATABASE_by_value)
+{
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,1,1,2,1,2,1,1,4,3,1,1,1,1,5,3};
+MS_UPDATE_LOCAL_DATABASE message0(data);
+MS_UPDATE_LOCAL_DATABASE message1( message0.LastUpdateSecurityTime,message0.LastUpdateParticipantTime,message0.LastUpdateInstrumentTime,message0.LastUpdateIndexTime,message0.RequestForOpenOrders,message0.Reserved,message0.St_Market_Status,message0. St_Ex_Market_Status,message0. St_Pl_Market_Status);
+EXPECT_EQ(message1.LastUpdateSecurityTime,16908545);
+EXPECT_EQ(message1.LastUpdateParticipantTime,33620481);
+EXPECT_EQ(message1.LastUpdateInstrumentTime,50594049);
+EXPECT_EQ(message1.LastUpdateIndexTime,16843009);
+EXPECT_EQ(message1.RequestForOpenOrders,5);
+EXPECT_EQ(message1.Reserved,3);
+EXPECT_EQ(message1.St_Market_Status,None);
+EXPECT_EQ(message1. St_Ex_Market_Status,None);
+EXPECT_EQ(message1. St_Pl_Market_Status,None);
+
+}
+TEST(MS_UPDATE_LOCAL_DATABASE_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,1,1,2,1,2,1,1,4,3,1,1,1,1,5,3};
+MS_UPDATE_LOCAL_DATABASE message(data);
+message.Flip_endian();
+EXPECT_EQ(message.LastUpdateSecurityTime,16843265);
+EXPECT_EQ(message.LastUpdateParticipantTime,16908546);
+EXPECT_EQ(message.LastUpdateInstrumentTime,16843779);
+EXPECT_EQ(message.LastUpdateIndexTime,16843009);
+EXPECT_EQ(message.RequestForOpenOrders,5);
+EXPECT_EQ(message.Reserved,3);
+EXPECT_EQ(message.St_Market_Status,None);
+EXPECT_EQ(message. St_Ex_Market_Status,None);
+EXPECT_EQ(message. St_Pl_Market_Status,None);
+
+}
+TEST(UPDATE_LDB_HEADER_Test,UPDATE_LDB_HEADER_by_Bytes)
+{
+uint8_t data[sizeof(UPDATE_LDB_HEADER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3};
+UPDATE_LDB_HEADER message(data);
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],3);
+}
+
+}
+TEST(UPDATE_LDB_HEADER_Test,UPDATE_LDB_HEADER_by_value)
+{
+uint8_t data[sizeof(UPDATE_LDB_HEADER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3};
+UPDATE_LDB_HEADER message0(data);
+UPDATE_LDB_HEADER message1( message0.Reserved);
+for (int j = 0; j < sizeof(message1.Reserved); j++)
+{
+EXPECT_EQ(message1.Reserved[j],3);
+}
+
+}
+TEST(UPDATE_LDB_HEADER_Test,Flip_endian)
+{
+uint8_t data[sizeof(UPDATE_LDB_HEADER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3};
+UPDATE_LDB_HEADER message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],3);
+}
+
+}
+TEST(INNER_MESSAGE_HEADER_Test,INNER_MESSAGE_HEADER_by_Bytes)
+{
+uint8_t data[sizeof(INNER_MESSAGE_HEADER)]={ ,1,1,2,4,3,2,5,6,1,1,2,6,1,7,6,7,3,2,6,7,4,3,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,2,7};
+INNER_MESSAGE_HEADER message(data);
+EXPECT_EQ(message.TraderId,67240193);
+EXPECT_EQ(message.LogTime,100991491);
+for (int j = 0; j < sizeof(message.AlphaChar); j++)
+{
+EXPECT_EQ(message.AlphaChar[j],1);
+}
+EXPECT_EQ(message. TransactionCode,1538);
+EXPECT_EQ(message.ErrorCode,1793);
+EXPECT_EQ(message.Timestamp,2.1730640440557747e+17);
+for (int j = 0; j < sizeof(message.Timestamp1); j++)
+{
+EXPECT_EQ(message.Timestamp1[j],2);
+}
+for (int j = 0; j < sizeof(message.Timestamp2); j++)
+{
+EXPECT_EQ(message.Timestamp2[j],6);
+}
+EXPECT_EQ(message. MessageLength,1794);
+
+}
+TEST(INNER_MESSAGE_HEADER_Test,INNER_MESSAGE_HEADER_by_value)
+{
+uint8_t data[sizeof(INNER_MESSAGE_HEADER)]={ ,1,1,2,4,3,2,5,6,1,1,2,6,1,7,6,7,3,2,6,7,4,3,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,2,7};
+INNER_MESSAGE_HEADER message0(data);
+INNER_MESSAGE_HEADER message1( message0.TraderId,message0.LogTime,message0.AlphaChar,message0. TransactionCode,message0.ErrorCode,message0.Timestamp,message0.Timestamp1,message0.Timestamp2,message0. MessageLength);
+EXPECT_EQ(message1.TraderId,67240193);
+EXPECT_EQ(message1.LogTime,100991491);
+for (int j = 0; j < sizeof(message1.AlphaChar); j++)
+{
+EXPECT_EQ(message1.AlphaChar[j],1);
+}
+EXPECT_EQ(message1. TransactionCode,1538);
+EXPECT_EQ(message1.ErrorCode,1793);
+EXPECT_EQ(message1.Timestamp,2.1730640440557747e+17);
+for (int j = 0; j < sizeof(message1.Timestamp1); j++)
+{
+EXPECT_EQ(message1.Timestamp1[j],2);
+}
+for (int j = 0; j < sizeof(message1.Timestamp2); j++)
+{
+EXPECT_EQ(message1.Timestamp2[j],6);
+}
+EXPECT_EQ(message1. MessageLength,1794);
+
+}
+TEST(INNER_MESSAGE_HEADER_Test,Flip_endian)
+{
+uint8_t data[sizeof(INNER_MESSAGE_HEADER)]={ ,1,1,2,4,3,2,5,6,1,1,2,6,1,7,6,7,3,2,6,7,4,3,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,2,7};
+INNER_MESSAGE_HEADER message(data);
+message.Flip_endian();
+EXPECT_EQ(message.TraderId,16843268);
+EXPECT_EQ(message.LogTime,50464006);
+for (int j = 0; j < sizeof(message.AlphaChar); j++)
+{
+EXPECT_EQ(message.AlphaChar[j],1);
+}
+EXPECT_EQ(message. TransactionCode,518);
+EXPECT_EQ(message.ErrorCode,263);
+EXPECT_EQ(message.Timestamp,4.343191962904832e+17);
+for (int j = 0; j < sizeof(message.Timestamp1); j++)
+{
+EXPECT_EQ(message.Timestamp1[j],2);
+}
+for (int j = 0; j < sizeof(message.Timestamp2); j++)
+{
+EXPECT_EQ(message.Timestamp2[j],6);
+}
+EXPECT_EQ(message. MessageLength,519);
+
+}
+TEST(UPDATE_LDB_DATA_Test,UPDATE_LDB_DATA_by_Bytes)
+{
+uint8_t data[sizeof(UPDATE_LDB_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+UPDATE_LDB_DATA message(data);
+EXPECT_EQ(message.inner_message_header,None);
+for (int j = 0; j < sizeof(message.Data); j++)
+{
+EXPECT_EQ(message.Data[j],0);
+}
+
+}
+TEST(UPDATE_LDB_DATA_Test,UPDATE_LDB_DATA_by_value)
+{
+uint8_t data[sizeof(UPDATE_LDB_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+UPDATE_LDB_DATA message0(data);
+UPDATE_LDB_DATA message1( message0.inner_message_header,message0.Data);
+EXPECT_EQ(message1.inner_message_header,None);
+for (int j = 0; j < sizeof(message1.Data); j++)
+{
+EXPECT_EQ(message1.Data[j],0);
+}
+
+}
+TEST(UPDATE_LDB_DATA_Test,Flip_endian)
+{
+uint8_t data[sizeof(UPDATE_LDB_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+UPDATE_LDB_DATA message(data);
+message.Flip_endian();
+EXPECT_EQ(message.inner_message_header,None);
+for (int j = 0; j < sizeof(message.Data); j++)
+{
+EXPECT_EQ(message.Data[j],0);
+}
+
+}
+TEST(INDEX_DETAILS_Test,INDEX_DETAILS_by_Bytes)
+{
+uint8_t data[sizeof(INDEX_DETAILS)]={ ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,4,3,2,2,3,1};
+INDEX_DETAILS message(data);
+for (int j = 0; j < sizeof(message.IndexName); j++)
+{
+EXPECT_EQ(message.IndexName[j],None);
+}
+EXPECT_EQ(message.Token,50594305);
+EXPECT_EQ(message.LastUpdateDateTime,16974338);
+
+}
+TEST(INDEX_DETAILS_Test,INDEX_DETAILS_by_value)
+{
+uint8_t data[sizeof(INDEX_DETAILS)]={ ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,4,3,2,2,3,1};
+INDEX_DETAILS message0(data);
+INDEX_DETAILS message1( message0.IndexName,message0.Token,message0.LastUpdateDateTime);
+for (int j = 0; j < sizeof(message1.IndexName); j++)
+{
+EXPECT_EQ(message1.IndexName[j],None);
+}
+EXPECT_EQ(message1.Token,50594305);
+EXPECT_EQ(message1.LastUpdateDateTime,16974338);
+
+}
+TEST(INDEX_DETAILS_Test,Flip_endian)
+{
+uint8_t data[sizeof(INDEX_DETAILS)]={ ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,4,3,2,2,3,1};
+INDEX_DETAILS message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.IndexName); j++)
+{
+EXPECT_EQ(message.IndexName[j],None);
+}
+EXPECT_EQ(message.Token,16909315);
+EXPECT_EQ(message.LastUpdateDateTime,33686273);
+
+}
+TEST(MS_DOWNLOAD_INDEX_Test,MS_DOWNLOAD_INDEX_by_Bytes)
+{
+uint8_t data[sizeof(MS_DOWNLOAD_INDEX)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+MS_DOWNLOAD_INDEX message(data);
+for (int j = 0; j < sizeof(message.Index_Details); j++)
+{
+EXPECT_EQ(message.Index_Details[j],9.615658295629106e+52);
+}
+
+}
+TEST(MS_DOWNLOAD_INDEX_Test,MS_DOWNLOAD_INDEX_by_value)
+{
+uint8_t data[sizeof(MS_DOWNLOAD_INDEX)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+MS_DOWNLOAD_INDEX message0(data);
+MS_DOWNLOAD_INDEX message1( message0.Index_Details);
+for (int j = 0; j < sizeof(message1.Index_Details); j++)
+{
+EXPECT_EQ(message1.Index_Details[j],9.615658295629106e+52);
+}
+
+}
+TEST(MS_DOWNLOAD_INDEX_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_DOWNLOAD_INDEX)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+MS_DOWNLOAD_INDEX message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.Index_Details); j++)
+{
+EXPECT_EQ(message.Index_Details[j],9.615658295629106e+52);
+}
+
+}
+TEST(BCAST_INDEX_MAP_DETAILS_Test,BCAST_INDEX_MAP_DETAILS_by_Bytes)
+{
+uint8_t data[sizeof(BCAST_INDEX_MAP_DETAILS)]={ ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,0,1,2,3,0};
+BCAST_INDEX_MAP_DETAILS message(data);
+for (int j = 0; j < sizeof(message.BcastName); j++)
+{
+EXPECT_EQ(message.BcastName[j],None);
+}
+for (int j = 0; j < sizeof(message.ChangedName); j++)
+{
+EXPECT_EQ(message.ChangedName[j],None);
+}
+EXPECT_EQ(message.DeleteFlag,0);
+EXPECT_EQ(message.LastUpdateDateTime,197121);
+
+}
+TEST(BCAST_INDEX_MAP_DETAILS_Test,BCAST_INDEX_MAP_DETAILS_by_value)
+{
+uint8_t data[sizeof(BCAST_INDEX_MAP_DETAILS)]={ ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,0,1,2,3,0};
+BCAST_INDEX_MAP_DETAILS message0(data);
+BCAST_INDEX_MAP_DETAILS message1( message0.BcastName,message0.ChangedName,message0.DeleteFlag,message0.LastUpdateDateTime);
+for (int j = 0; j < sizeof(message1.BcastName); j++)
+{
+EXPECT_EQ(message1.BcastName[j],None);
+}
+for (int j = 0; j < sizeof(message1.ChangedName); j++)
+{
+EXPECT_EQ(message1.ChangedName[j],None);
+}
+EXPECT_EQ(message1.DeleteFlag,0);
+EXPECT_EQ(message1.LastUpdateDateTime,197121);
+
+}
+TEST(BCAST_INDEX_MAP_DETAILS_Test,Flip_endian)
+{
+uint8_t data[sizeof(BCAST_INDEX_MAP_DETAILS)]={ ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,0,1,2,3,0};
+BCAST_INDEX_MAP_DETAILS message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.BcastName); j++)
+{
+EXPECT_EQ(message.BcastName[j],None);
+}
+for (int j = 0; j < sizeof(message.ChangedName); j++)
+{
+EXPECT_EQ(message.ChangedName[j],None);
+}
+EXPECT_EQ(message.DeleteFlag,0);
+EXPECT_EQ(message.LastUpdateDateTime,16909056);
+
+}
+TEST(MS_DOWNLOAD_INDEX_MAP_Test,MS_DOWNLOAD_INDEX_MAP_by_Bytes)
+{
+uint8_t data[sizeof(MS_DOWNLOAD_INDEX_MAP)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+MS_DOWNLOAD_INDEX_MAP message(data);
+EXPECT_EQ(message.NoOfRecords,None);
+for (int j = 0; j < sizeof(message.bcast_index_map_details); j++)
+{
+EXPECT_EQ(message.bcast_index_map_details[j],None);
+}
+
+}
+TEST(MS_DOWNLOAD_INDEX_MAP_Test,MS_DOWNLOAD_INDEX_MAP_by_value)
+{
+uint8_t data[sizeof(MS_DOWNLOAD_INDEX_MAP)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+MS_DOWNLOAD_INDEX_MAP message0(data);
+MS_DOWNLOAD_INDEX_MAP message1( message0.NoOfRecords,message0.bcast_index_map_details);
+EXPECT_EQ(message1.NoOfRecords,None);
+for (int j = 0; j < sizeof(message1.bcast_index_map_details); j++)
+{
+EXPECT_EQ(message1.bcast_index_map_details[j],None);
+}
+
+}
+TEST(MS_DOWNLOAD_INDEX_MAP_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_DOWNLOAD_INDEX_MAP)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+MS_DOWNLOAD_INDEX_MAP message(data);
+message.Flip_endian();
+EXPECT_EQ(message.NoOfRecords,None);
+for (int j = 0; j < sizeof(message.bcast_index_map_details); j++)
+{
+EXPECT_EQ(message.bcast_index_map_details[j],None);
+}
+
+}
+TEST(UPDATE_LOCAL_DB_TRAILER_Test,UPDATE_LOCAL_DB_TRAILER_by_Bytes)
+{
+uint8_t data[sizeof(UPDATE_LOCAL_DB_TRAILER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1};
+UPDATE_LOCAL_DB_TRAILER message(data);
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],None);
+}
+
+}
+TEST(UPDATE_LOCAL_DB_TRAILER_Test,UPDATE_LOCAL_DB_TRAILER_by_value)
+{
+uint8_t data[sizeof(UPDATE_LOCAL_DB_TRAILER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1};
+UPDATE_LOCAL_DB_TRAILER message0(data);
+UPDATE_LOCAL_DB_TRAILER message1( message0.Reserved);
+for (int j = 0; j < sizeof(message1.Reserved); j++)
+{
+EXPECT_EQ(message1.Reserved[j],None);
+}
+
+}
+TEST(UPDATE_LOCAL_DB_TRAILER_Test,Flip_endian)
+{
+uint8_t data[sizeof(UPDATE_LOCAL_DB_TRAILER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1};
+UPDATE_LOCAL_DB_TRAILER message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.Reserved); j++)
+{
+EXPECT_EQ(message.Reserved[j],None);
+}
+
+}
+TEST(EXCH_PORTFOLIO_REQ_Test,EXCH_PORTFOLIO_REQ_by_Bytes)
+{
+uint8_t data[sizeof(EXCH_PORTFOLIO_REQ)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2};
+EXCH_PORTFOLIO_REQ message(data);
+EXPECT_EQ(message.LastUpdateDtTime,33620225);
+
+}
+TEST(EXCH_PORTFOLIO_REQ_Test,EXCH_PORTFOLIO_REQ_by_value)
+{
+uint8_t data[sizeof(EXCH_PORTFOLIO_REQ)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2};
+EXCH_PORTFOLIO_REQ message0(data);
+EXCH_PORTFOLIO_REQ message1( message0.LastUpdateDtTime);
+EXPECT_EQ(message1.LastUpdateDtTime,33620225);
+
+}
+TEST(EXCH_PORTFOLIO_REQ_Test,Flip_endian)
+{
+uint8_t data[sizeof(EXCH_PORTFOLIO_REQ)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2};
+EXCH_PORTFOLIO_REQ message(data);
+message.Flip_endian();
+EXPECT_EQ(message.LastUpdateDtTime,16843010);
+
+}
+TEST(PORTFOLIO_DATA_Test,PORTFOLIO_DATA_by_Bytes)
+{
+uint8_t data[sizeof(PORTFOLIO_DATA)]={ ,3,3,3,3,3,3,3,3,3,3,2,3,6,1,0,7,3,1,9};
+PORTFOLIO_DATA message(data);
+for (int j = 0; j < sizeof(message.Portfolio); j++)
+{
+EXPECT_EQ(message.Portfolio[j],3);
+}
+EXPECT_EQ(message.Token,17171202);
+EXPECT_EQ(message.LastUpdateDtTime,16975616);
+EXPECT_EQ(message.DeleteFlag,9);
+
+}
+TEST(PORTFOLIO_DATA_Test,PORTFOLIO_DATA_by_value)
+{
+uint8_t data[sizeof(PORTFOLIO_DATA)]={ ,3,3,3,3,3,3,3,3,3,3,2,3,6,1,0,7,3,1,9};
+PORTFOLIO_DATA message0(data);
+PORTFOLIO_DATA message1( message0.Portfolio,message0.Token,message0.LastUpdateDtTime,message0.DeleteFlag);
+for (int j = 0; j < sizeof(message1.Portfolio); j++)
+{
+EXPECT_EQ(message1.Portfolio[j],3);
+}
+EXPECT_EQ(message1.Token,17171202);
+EXPECT_EQ(message1.LastUpdateDtTime,16975616);
+EXPECT_EQ(message1.DeleteFlag,9);
+
+}
+TEST(PORTFOLIO_DATA_Test,Flip_endian)
+{
+uint8_t data[sizeof(PORTFOLIO_DATA)]={ ,3,3,3,3,3,3,3,3,3,3,2,3,6,1,0,7,3,1,9};
+PORTFOLIO_DATA message(data);
+message.Flip_endian();
+for (int j = 0; j < sizeof(message.Portfolio); j++)
+{
+EXPECT_EQ(message.Portfolio[j],3);
+}
+EXPECT_EQ(message.Token,33752577);
+EXPECT_EQ(message.LastUpdateDtTime,459521);
+EXPECT_EQ(message.DeleteFlag,9);
+
+}
+TEST(EXCH_PORTFOLIO_RESP_Test,EXCH_PORTFOLIO_RESP_by_Bytes)
+{
+uint8_t data[sizeof(EXCH_PORTFOLIO_RESP)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+EXCH_PORTFOLIO_RESP message(data);
+EXPECT_EQ(message.NoOf_Records,770);
+EXPECT_EQ(message.MoreRecords,3);
+EXPECT_EQ(message.Filler,2);
+for (int j = 0; j < sizeof(message.portfoliio_data); j++)
+{
+EXPECT_EQ(message.portfoliio_data[j],1);
+}
+
+}
+TEST(EXCH_PORTFOLIO_RESP_Test,EXCH_PORTFOLIO_RESP_by_value)
+{
+uint8_t data[sizeof(EXCH_PORTFOLIO_RESP)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+EXCH_PORTFOLIO_RESP message0(data);
+EXCH_PORTFOLIO_RESP message1( message0.NoOf_Records,message0.MoreRecords,message0.Filler,message0.portfoliio_data);
+EXPECT_EQ(message1.NoOf_Records,770);
+EXPECT_EQ(message1.MoreRecords,3);
+EXPECT_EQ(message1.Filler,2);
+for (int j = 0; j < sizeof(message1.portfoliio_data); j++)
+{
+EXPECT_EQ(message1.portfoliio_data[j],1);
+}
+
+}
+TEST(EXCH_PORTFOLIO_RESP_Test,Flip_endian)
+{
+uint8_t data[sizeof(EXCH_PORTFOLIO_RESP)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+EXCH_PORTFOLIO_RESP message(data);
+message.Flip_endian();
+EXPECT_EQ(message.NoOf_Records,515);
+EXPECT_EQ(message.MoreRecords,3);
+EXPECT_EQ(message.Filler,2);
+for (int j = 0; j < sizeof(message.portfoliio_data); j++)
+{
+EXPECT_EQ(message.portfoliio_data[j],1);
+}
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_Test,MS_MESSAGE_DOWNLOAD_by_Bytes)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0};
+MS_MESSAGE_DOWNLOAD message(data);
+EXPECT_EQ(message.SequenceNumber,4311744512);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_Test,MS_MESSAGE_DOWNLOAD_by_value)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0};
+MS_MESSAGE_DOWNLOAD message0(data);
+MS_MESSAGE_DOWNLOAD message1( message0.SequenceNumber);
+EXPECT_EQ(message1.SequenceNumber,4311744512);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0};
+MS_MESSAGE_DOWNLOAD message(data);
+message.Flip_endian();
+EXPECT_EQ(message.SequenceNumber,4311744512);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_HEADER_Test,MS_MESSAGE_DOWNLOAD_HEADER_by_Bytes)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_HEADER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_HEADER message(data);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_HEADER_Test,MS_MESSAGE_DOWNLOAD_HEADER_by_value)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_HEADER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_HEADER message0(data);
+MS_MESSAGE_DOWNLOAD_HEADER message1( );
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_HEADER_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_HEADER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_HEADER message(data);
+message.Flip_endian();
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_DATA_Test,MS_MESSAGE_DOWNLOAD_DATA_by_Bytes)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_DATA message(data);
+EXPECT_EQ(message.Inner_message_header,None);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_DATA_Test,MS_MESSAGE_DOWNLOAD_DATA_by_value)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_DATA message0(data);
+MS_MESSAGE_DOWNLOAD_DATA message1( message0.Inner_message_header);
+EXPECT_EQ(message1.Inner_message_header,None);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_DATA_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_DATA)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_DATA message(data);
+message.Flip_endian();
+EXPECT_EQ(message.Inner_message_header,None);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_TRAILER_Test,MS_MESSAGE_DOWNLOAD_TRAILER_by_Bytes)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_TRAILER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_TRAILER message(data);
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_TRAILER_Test,MS_MESSAGE_DOWNLOAD_TRAILER_by_value)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_TRAILER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_TRAILER message0(data);
+MS_MESSAGE_DOWNLOAD_TRAILER message1( );
+
+}
+TEST(MS_MESSAGE_DOWNLOAD_TRAILER_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_MESSAGE_DOWNLOAD_TRAILER)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_MESSAGE_DOWNLOAD_TRAILER message(data);
+message.Flip_endian();
+
+}
+TEST(MS_SIGNOFF_Test,MS_SIGNOFF_by_Bytes)
+{
+uint8_t data[sizeof(MS_SIGNOFF)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_SIGNOFF message(data);
+
+}
+TEST(MS_SIGNOFF_Test,MS_SIGNOFF_by_value)
+{
+uint8_t data[sizeof(MS_SIGNOFF)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_SIGNOFF message0(data);
+MS_SIGNOFF message1( );
+
+}
+TEST(MS_SIGNOFF_Test,Flip_endian)
+{
+uint8_t data[sizeof(MS_SIGNOFF)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+MS_SIGNOFF message(data);
+message.Flip_endian();
+
+}
+TEST(HEARTBEAT_Test,HEARTBEAT_by_Bytes)
+{
+uint8_t data[sizeof(HEARTBEAT)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+HEARTBEAT message(data);
+
+}
+TEST(HEARTBEAT_Test,HEARTBEAT_by_value)
+{
+uint8_t data[sizeof(HEARTBEAT)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+HEARTBEAT message0(data);
+HEARTBEAT message1( );
+
+}
+TEST(HEARTBEAT_Test,Flip_endian)
+{
+uint8_t data[sizeof(HEARTBEAT)]={ ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+HEARTBEAT message(data);
+message.Flip_endian();
+
+}

@@ -1,0 +1,195 @@
+void NNF_logIN::SEND_GR_REQUEST()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_GR_REQUESTL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,22,2,};
+GR_REQUEST* ms = new GR_REQUEST(data);
+ms->Direct_Interface_Header.Length = sizeof(GR_REQUEST);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::GR_REQUEST;
+ms->Message_Header.MessageLength = (sizeof(GR_REQUEST) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(GR_REQUEST));
+}
+void NNF_logIN::RECEIVE_GR_RESPONSE(GR_RESPONSE* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_GR_RESPONSEL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_BOX_SIGN_ON_REQUEST_IN()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_BOX_SIGN_ON_REQUEST_INL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,01,02,1,1,1,};
+BOX_SIGN_ON_REQUEST_IN* ms = new BOX_SIGN_ON_REQUEST_IN(data);
+ms->Direct_Interface_Header.Length = sizeof(BOX_SIGN_ON_REQUEST_IN);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::BOX_SIGN_ON_REQUEST_IN;
+ms->Message_Header.MessageLength = (sizeof(BOX_SIGN_ON_REQUEST_IN) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(BOX_SIGN_ON_REQUEST_IN));
+}
+void NNF_logIN::RECEIVE_BOX_SIGN_ON_REQUEST_OUT(BOX_SIGN_ON_REQUEST_OUT* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_BOX_SIGN_ON_REQUEST_OUTL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_MS_SIGNON()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_MS_SIGNONL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,3,4,5,3,3,2,2,2,2,5,7,4,3,5,5,5,5,1,1,1,1,6,5,8,9,9,0,0,0,0,1,0,0,0,1,2,3,1,1,4,4,1,2,3,4,5,};
+MS_SIGNON* ms = new MS_SIGNON(data);
+ms->Direct_Interface_Header.Length = sizeof(MS_SIGNON);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::SIGN_ON_REQUEST_IN;
+ms->Message_Header.MessageLength = (sizeof(MS_SIGNON) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(MS_SIGNON));
+}
+void NNF_logIN::RECEIVE_MS_SIGNON(MS_SIGNON* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_SIGNONL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() <<" L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_MS_ERROR_RESPONSE(MS_ERROR_RESPONSE* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_ERROR_RESPONSEL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_MS_SYSTEM_INFO_REQ()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_MS_SYSTEM_INFO_REQL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,};
+MS_SYSTEM_INFO_REQ* ms = new MS_SYSTEM_INFO_REQ(data);
+ms->Direct_Interface_Header.Length = sizeof(MS_SYSTEM_INFO_REQ);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::SYSTEM_INFORMATION_IN;
+ms->Message_Header.MessageLength = (sizeof(MS_SYSTEM_INFO_REQ) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(MS_SYSTEM_INFO_REQ));
+}
+void NNF_logIN::RECEIVE_MS_SYSTEM_INFO_DATA(MS_SYSTEM_INFO_DATA* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_SYSTEM_INFO_DATAL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_MS_UPDATE_LOCAL_DATABASE()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_MS_UPDATE_LOCAL_DATABASEL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,1,1,2,1,2,1,1,4,3,1,1,1,1,5,3,};
+MS_UPDATE_LOCAL_DATABASE* ms = new MS_UPDATE_LOCAL_DATABASE(data);
+ms->Direct_Interface_Header.Length = sizeof(MS_UPDATE_LOCAL_DATABASE);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::UPDATE_LOCALDB_IN;
+ms->Message_Header.MessageLength = (sizeof(MS_UPDATE_LOCAL_DATABASE) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(MS_UPDATE_LOCAL_DATABASE));
+}
+void NNF_logIN::RECEIVE_MS_UPDATE_LOCAL_DATABASE(MS_UPDATE_LOCAL_DATABASE* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_UPDATE_LOCAL_DATABASEL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() <<" L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_UPDATE_LDB_HEADER(UPDATE_LDB_HEADER* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_UPDATE_LDB_HEADERL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_UPDATE_LDB_DATA(UPDATE_LDB_DATA* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_UPDATE_LDB_DATAL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_MS_DOWNLOAD_INDEX(MS_DOWNLOAD_INDEX* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_DOWNLOAD_INDEXL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_MS_DOWNLOAD_INDEX_MAP(MS_DOWNLOAD_INDEX_MAP* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_DOWNLOAD_INDEX_MAPL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_UPDATE_LOCAL_DB_TRAILER(UPDATE_LOCAL_DB_TRAILER* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_UPDATE_LOCAL_DB_TRAILERL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_EXCH_PORTFOLIO_REQ()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_EXCH_PORTFOLIO_REQL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2,};
+EXCH_PORTFOLIO_REQ* ms = new EXCH_PORTFOLIO_REQ(data);
+ms->Direct_Interface_Header.Length = sizeof(EXCH_PORTFOLIO_REQ);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::EXCH_PORTF_IN;
+ms->Message_Header.MessageLength = (sizeof(EXCH_PORTFOLIO_REQ) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(EXCH_PORTFOLIO_REQ));
+}
+void NNF_logIN::RECEIVE_EXCH_PORTFOLIO_RESP(EXCH_PORTFOLIO_RESP* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_EXCH_PORTFOLIO_RESPL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_MS_MESSAGE_DOWNLOAD()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_MS_MESSAGE_DOWNLOADL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,};
+MS_MESSAGE_DOWNLOAD* ms = new MS_MESSAGE_DOWNLOAD(data);
+ms->Direct_Interface_Header.Length = sizeof(MS_MESSAGE_DOWNLOAD);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::DOWNLOAD_REQUEST;
+ms->Message_Header.MessageLength = (sizeof(MS_MESSAGE_DOWNLOAD) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(MS_MESSAGE_DOWNLOAD));
+}
+void NNF_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD_HEADER(MS_MESSAGE_DOWNLOAD_HEADER* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_MESSAGE_DOWNLOAD_HEADERL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD_DATA(MS_MESSAGE_DOWNLOAD_DATA* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_MESSAGE_DOWNLOAD_DATAL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD_TRAILER(MS_MESSAGE_DOWNLOAD_TRAILER* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_MESSAGE_DOWNLOAD_TRAILERL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() << "L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_MS_SIGNOFF()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_MS_SIGNOFFL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+MS_SIGNOFF* ms = new MS_SIGNOFF(data);
+ms->Direct_Interface_Header.Length = sizeof(MS_SIGNOFF);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::SIGN_OFF_REQUEST_IN;
+ms->Message_Header.MessageLength = (sizeof(MS_SIGNOFF) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(MS_SIGNOFF));
+}
+void NNF_logIN::RECEIVE_MS_SIGNOFF(MS_SIGNOFF* ms)
+{
+BOOST_LOG_TRIVIAL(info) << "RECEIVE_MS_SIGNOFFL: " << __LINE__ << ":" << __FILE__ "\n";
+BOOST_LOG_TRIVIAL(info) << ms->toJSON() <<" L: " << __LINE__ << ":" << __FILE__ "\n";
+delete  ms;
+}
+void NNF_logIN::SEND_HEARTBEAT()
+{
+BOOST_LOG_TRIVIAL(info) << "SEND_HEARTBEATL: " << __LINE__ << ":" << __FILE__ "\n";
+uint8_t data[sizeof(MS_UPDATE_LOCAL_DATABASE)] = {  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+HEARTBEAT* ms = new HEARTBEAT(data);
+ms->Direct_Interface_Header.Length = sizeof(HEARTBEAT);
+ms->Message_Header.TransactionCode = NNF_Constants::TransactionCode::HEART_BEAT;
+ms->Message_Header.MessageLength = (sizeof(HEARTBEAT) - sizeof(DIRECT_INTERFACE_HEADER));BOOST_LOG_TRIVIAL(info) << ms->toJSON() << " L: " << __LINE__ << ":" << __FILE__ << "\n";
+ms->Flip_endian();
+sig_SEND((uint8_t*)ms, sizeof(HEARTBEAT));
+}

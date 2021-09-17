@@ -1,0 +1,72 @@
+case NNF_Constants::TransactionCode::GR_REQUEST :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :GR_REQUESTL: " << __LINE__ << ":" << __FILE__ "\n";
+GR_REQUEST* ms=new GR_REQUEST(data);
+ms->Flip_endian();
+sig_RECEIVE_GR_REQUEST(ms);
+break;
+}
+case NNF_Constants::TransactionCode::BOX_SIGN_ON_REQUEST_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :BOX_SIGN_ON_REQUEST_INL: " << __LINE__ << ":" << __FILE__ "\n";
+BOX_SIGN_ON_REQUEST_IN* ms=new BOX_SIGN_ON_REQUEST_IN(data);
+ms->Flip_endian();
+sig_RECEIVE_BOX_SIGN_ON_REQUEST_IN(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SIGN_ON_REQUEST_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_SIGNONL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_SIGNON* ms=new MS_SIGNON(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_SIGNON(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SYSTEM_INFORMATION_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_SYSTEM_INFO_REQL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_SYSTEM_INFO_REQ* ms=new MS_SYSTEM_INFO_REQ(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_SYSTEM_INFO_REQ(ms);
+break;
+}
+case NNF_Constants::TransactionCode::UPDATE_LOCALDB_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_UPDATE_LOCAL_DATABASEL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_UPDATE_LOCAL_DATABASE* ms=new MS_UPDATE_LOCAL_DATABASE(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_UPDATE_LOCAL_DATABASE(ms);
+break;
+}
+case NNF_Constants::TransactionCode::EXCH_PORTF_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :EXCH_PORTFOLIO_REQL: " << __LINE__ << ":" << __FILE__ "\n";
+EXCH_PORTFOLIO_REQ* ms=new EXCH_PORTFOLIO_REQ(data);
+ms->Flip_endian();
+sig_RECEIVE_EXCH_PORTFOLIO_REQ(ms);
+break;
+}
+case NNF_Constants::TransactionCode::DOWNLOAD_REQUEST :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_MESSAGE_DOWNLOADL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_MESSAGE_DOWNLOAD* ms=new MS_MESSAGE_DOWNLOAD(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_MESSAGE_DOWNLOAD(ms);
+break;
+}
+case NNF_Constants::TransactionCode::SIGN_OFF_REQUEST_IN :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :MS_SIGNOFFL: " << __LINE__ << ":" << __FILE__ "\n";
+MS_SIGNOFF* ms=new MS_SIGNOFF(data);
+ms->Flip_endian();
+sig_RECEIVE_MS_SIGNOFF(ms);
+break;
+}
+case NNF_Constants::TransactionCode::HEART_BEAT :
+{
+BOOST_LOG_TRIVIAL(info) << "Classify_and_Distribute :HEARTBEATL: " << __LINE__ << ":" << __FILE__ "\n";
+HEARTBEAT* ms=new HEARTBEAT(data);
+ms->Flip_endian();
+sig_RECEIVE_HEARTBEAT(ms);
+break;
+}

@@ -1,0 +1,9 @@
+boost::signals2::signal<void(GR_REQUEST*)> sig_RECEIVE_GR_REQUEST;
+boost::signals2::signal<void(BOX_SIGN_ON_REQUEST_IN*)> sig_RECEIVE_BOX_SIGN_ON_REQUEST_IN;
+boost::signals2::signal<void(MS_SIGNON*)> sig_RECEIVE_MS_SIGNON;
+boost::signals2::signal<void(MS_SYSTEM_INFO_REQ*)> sig_RECEIVE_MS_SYSTEM_INFO_REQ;
+boost::signals2::signal<void(MS_UPDATE_LOCAL_DATABASE*)> sig_RECEIVE_MS_UPDATE_LOCAL_DATABASE;
+boost::signals2::signal<void(EXCH_PORTFOLIO_REQ*)> sig_RECEIVE_EXCH_PORTFOLIO_REQ;
+boost::signals2::signal<void(MS_MESSAGE_DOWNLOAD*)> sig_RECEIVE_MS_MESSAGE_DOWNLOAD;
+boost::signals2::signal<void(MS_SIGNOFF*)> sig_RECEIVE_MS_SIGNOFF;
+boost::signals2::signal<void(HEARTBEAT*)> sig_RECEIVE_HEARTBEAT;

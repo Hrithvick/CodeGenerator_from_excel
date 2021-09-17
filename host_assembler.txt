@@ -1,0 +1,9 @@
+THost_Transceiver01.sig_RECEIVE_GR_REQUEST.connect(boost::bind(&HOST_logIN::RECEIVE_GR_REQUEST, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_BOX_SIGN_ON_REQUEST_IN.connect(boost::bind(&HOST_logIN::RECEIVE_BOX_SIGN_ON_REQUEST_IN, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_MS_SIGNON.connect(boost::bind(&HOST_logIN::RECEIVE_MS_SIGNON, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_MS_SYSTEM_INFO_REQ.connect(boost::bind(&HOST_logIN::RECEIVE_MS_SYSTEM_INFO_REQ, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_MS_UPDATE_LOCAL_DATABASE.connect(boost::bind(&HOST_logIN::RECEIVE_MS_UPDATE_LOCAL_DATABASE, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_EXCH_PORTFOLIO_REQ.connect(boost::bind(&HOST_logIN::RECEIVE_EXCH_PORTFOLIO_REQ, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_MS_MESSAGE_DOWNLOAD.connect(boost::bind(&HOST_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_MS_SIGNOFF.connect(boost::bind(&HOST_logIN::RECEIVE_MS_SIGNOFF, &host_logIn, _1));
+THost_Transceiver01.sig_RECEIVE_HEARTBEAT.connect(boost::bind(&HOST_logIN::RECEIVE_HEARTBEAT, &host_logIn, _1));

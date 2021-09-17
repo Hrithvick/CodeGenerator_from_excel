@@ -1,0 +1,1337 @@
+DIRECT_INTERFACE_HEADER::DIRECT_INTERFACE_HEADER()
+{
+}
+DIRECT_INTERFACE_HEADER::DIRECT_INTERFACE_HEADER(uint8_t data[])
+{
+*this=*((DIRECT_INTERFACE_HEADER*)data);
+}
+DIRECT_INTERFACE_HEADER::DIRECT_INTERFACE_HEADER( uint16_t  Length,)
+{
+this->Length = Length;
+this-> Sequence_number = 0;
+for(int i=0;i<sizeof(this-> Checksum_MD5);i++)
+{
+this-> Checksum_MD5[i]=0;
+}
+}
+void DIRECT_INTERFACE_HEADER:: Flip_endian()
+{
+this->Length = boost::endian::endian_reverse(this->Length);
+this-> Sequence_number = boost::endian::endian_reverse(this-> Sequence_number);
+}
+std::string DIRECT_INTERFACE_HEADER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("Length" , this->Length));
+addr_obj.push_back(json_spirit::Pair(" Sequence_number" , this-> Sequence_number));
+addr_obj.push_back(json_spirit::Pair(" Checksum_MD5" , toString(this-> Checksum_MD5,sizeof(this-> Checksum_MD5))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MESSAGE_HEADER::MESSAGE_HEADER()
+{
+}
+MESSAGE_HEADER::MESSAGE_HEADER(uint8_t data[])
+{
+*this=*((MESSAGE_HEADER*)data);
+}
+MESSAGE_HEADER::MESSAGE_HEADER( NNF_Constants::TransactionCode  TransactionCode,uint32_t  LogTime,uint32_t  TraderId,uint16_t  ErrorCode,)
+{
+this-> TransactionCode =  TransactionCode;
+this->LogTime = LogTime;
+for(int i=0;i<sizeof(this->AlphaChar);i++)
+{
+this->AlphaChar[i]=' ';
+}
+this->TraderId = TraderId;
+this->ErrorCode = ErrorCode;
+this->Timestamp = ' ';
+for(int i=0;i<sizeof(this->TimeStamp1);i++)
+{
+this->TimeStamp1[i]=' ';
+}
+for(int i=0;i<sizeof(this->TimeStamp2);i++)
+{
+this->TimeStamp2[i]=' ';
+}
+this->MessageLength = ' ';
+}
+void MESSAGE_HEADER:: Flip_endian()
+{
+this-> TransactionCode.Flip_endian();
+this->LogTime = boost::endian::endian_reverse(this->LogTime);
+this->TraderId = boost::endian::endian_reverse(this->TraderId);
+this->ErrorCode = boost::endian::endian_reverse(this->ErrorCode);
+this->Timestamp = boost::endian::endian_reverse(this->Timestamp);
+this->MessageLength = boost::endian::endian_reverse(this->MessageLength);
+}
+std::string MESSAGE_HEADER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this-> TransactionCode.toJSON();
+addr_obj.push_back(json_spirit::Pair("LogTime" , this->LogTime));
+addr_obj.push_back(json_spirit::Pair("AlphaChar" , toString(this->AlphaChar,sizeof(this->AlphaChar))));
+addr_obj.push_back(json_spirit::Pair("TraderId" , this->TraderId));
+addr_obj.push_back(json_spirit::Pair("ErrorCode" , this->ErrorCode));
+addr_obj.push_back(json_spirit::Pair("Timestamp" , this->Timestamp));
+addr_obj.push_back(json_spirit::Pair("TimeStamp1" , toString(this->TimeStamp1,sizeof(this->TimeStamp1))));
+addr_obj.push_back(json_spirit::Pair("TimeStamp2" , toString(this->TimeStamp2,sizeof(this->TimeStamp2))));
+addr_obj.push_back(json_spirit::Pair("MessageLength" , this->MessageLength));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+GR_REQUEST::GR_REQUEST()
+{
+}
+GR_REQUEST::GR_REQUEST(uint8_t data[])
+{
+*this=*((GR_REQUEST*)data);
+}
+GR_REQUEST::GR_REQUEST( uint16_t Box_ID,uint8_t BrokerID[],)
+{
+this->Direct_Interface_Header.set_values(sizeof(GR_REQUEST));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::GR_REQUEST,(sizeof(GR_REQUEST) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->Box_ID = Box_ID;
+std::copy(BrokerID,BrokerID+ sizeof(this->BrokerID), this->BrokerID);
+this->Filler = ' ';
+}
+void GR_REQUEST:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->Box_ID = boost::endian::endian_reverse(this->Box_ID);
+this->Filler = boost::endian::endian_reverse(this->Filler);
+}
+std::string GR_REQUEST:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("Box_ID" , this->Box_ID));
+addr_obj.push_back(json_spirit::Pair("BrokerID" , toString(this->BrokerID,sizeof(this->BrokerID))));
+addr_obj.push_back(json_spirit::Pair("Filler" , this->Filler));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+GR_RESPONSE::GR_RESPONSE()
+{
+}
+GR_RESPONSE::GR_RESPONSE(uint8_t data[])
+{
+*this=*((GR_RESPONSE*)data);
+}
+GR_RESPONSE::GR_RESPONSE( uint16_t Box_ID,uint8_t BrokerID[],uint8_t IP_Address[],uint32_t Port,uint8_t Session_Key[])
+{
+this->Direct_Interface_Header.set_values(sizeof(GR_RESPONSE));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::GR_RESPONSE,(sizeof(GR_RESPONSE) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->Box_ID = Box_ID;
+std::copy(BrokerID,BrokerID+ sizeof(this->BrokerID), this->BrokerID);
+this->Filler = ' ';
+std::copy(IP_Address,IP_Address+ sizeof(this->IP_Address), this->IP_Address);
+this->Port = Port;
+std::copy(Session_Key,Session_Key+ sizeof(this->Session_Key), this->Session_Key);
+}
+void GR_RESPONSE:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->Box_ID = boost::endian::endian_reverse(this->Box_ID);
+this->Filler = boost::endian::endian_reverse(this->Filler);
+this->Port = boost::endian::endian_reverse(this->Port);
+}
+std::string GR_RESPONSE:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("Box_ID" , this->Box_ID));
+addr_obj.push_back(json_spirit::Pair("BrokerID" , toString(this->BrokerID,sizeof(this->BrokerID))));
+addr_obj.push_back(json_spirit::Pair("Filler" , this->Filler));
+addr_obj.push_back(json_spirit::Pair("IP_Address" , toString(this->IP_Address,sizeof(this->IP_Address))));
+addr_obj.push_back(json_spirit::Pair("Port" , this->Port));
+addr_obj.push_back(json_spirit::Pair("Session_Key" , toString(this->Session_Key,sizeof(this->Session_Key))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+BOX_SIGN_ON_REQUEST_IN::BOX_SIGN_ON_REQUEST_IN()
+{
+}
+BOX_SIGN_ON_REQUEST_IN::BOX_SIGN_ON_REQUEST_IN(uint8_t data[])
+{
+*this=*((BOX_SIGN_ON_REQUEST_IN*)data);
+}
+BOX_SIGN_ON_REQUEST_IN::BOX_SIGN_ON_REQUEST_IN( uint16_t  BoxId,uint8_t  BrokerId[],uint8_t SessionKey[])
+{
+this->Direct_Interface_Header.set_values(sizeof(BOX_SIGN_ON_REQUEST_IN));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::BOX_SIGN_ON_REQUEST_IN,(sizeof(BOX_SIGN_ON_REQUEST_IN) - sizeof(DIRECT_INTERFACE_HEADER)));
+this-> BoxId =  BoxId;
+std::copy( BrokerId, BrokerId+ sizeof(this-> BrokerId), this-> BrokerId);
+for(int i=0;i<sizeof(this->Reserved);i++)
+{
+this->Reserved[i]=' ';
+}
+std::copy(SessionKey,SessionKey+ sizeof(this->SessionKey), this->SessionKey);
+}
+void BOX_SIGN_ON_REQUEST_IN:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this-> BoxId = boost::endian::endian_reverse(this-> BoxId);
+}
+std::string BOX_SIGN_ON_REQUEST_IN:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair(" BoxId" , this-> BoxId));
+addr_obj.push_back(json_spirit::Pair(" BrokerId" , toString(this-> BrokerId,sizeof(this-> BrokerId))));
+addr_obj.push_back(json_spirit::Pair("Reserved" , toString(this->Reserved,sizeof(this->Reserved))));
+addr_obj.push_back(json_spirit::Pair("SessionKey" , toString(this->SessionKey,sizeof(this->SessionKey))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+BOX_SIGN_ON_REQUEST_OUT::BOX_SIGN_ON_REQUEST_OUT()
+{
+}
+BOX_SIGN_ON_REQUEST_OUT::BOX_SIGN_ON_REQUEST_OUT(uint8_t data[])
+{
+*this=*((BOX_SIGN_ON_REQUEST_OUT*)data);
+}
+BOX_SIGN_ON_REQUEST_OUT::BOX_SIGN_ON_REQUEST_OUT( uint16_t BoxId,)
+{
+this->Direct_Interface_Header.set_values(sizeof(BOX_SIGN_ON_REQUEST_OUT));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::BOX_SIGN_ON_REQUEST_OUT,(sizeof(BOX_SIGN_ON_REQUEST_OUT) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->BoxId = BoxId;
+for(int i=0;i<sizeof(this->Reserved);i++)
+{
+this->Reserved[i]=' ';
+}
+}
+void BOX_SIGN_ON_REQUEST_OUT:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->BoxId = boost::endian::endian_reverse(this->BoxId);
+}
+std::string BOX_SIGN_ON_REQUEST_OUT:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("BoxId" , this->BoxId));
+addr_obj.push_back(json_spirit::Pair("Reserved" , toString(this->Reserved,sizeof(this->Reserved))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_SIGNON::MS_SIGNON()
+{
+}
+MS_SIGNON::MS_SIGNON(uint8_t data[])
+{
+*this=*((MS_SIGNON*)data);
+}
+MS_SIGNON::MS_SIGNON( uint32_t  UserID,uint8_t Password2[],uint32_t  LastPasswordChangeDate,uint8_t BrokerID[],uint16_t  BranchID,uint32_t  VersionNumber,uint16_t  UserType,uint8_t  WsClassName[],ST_BROKER_ELIGIBILITY_PER_MKT  STRUCT,uint8_t  BrokerName[],)
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_SIGNON));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::SIGN_ON_REQUEST_IN,(sizeof(MS_SIGNON) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->UserID = UserID;
+for(int i=0;i<sizeof(this->Reserved1);i++)
+{
+this->Reserved1[i]=' ';
+}
+std::copy(Password2,Password2+ sizeof(this->Password2), this->Password2);
+for(int i=0;i<sizeof(this->Reserved3);i++)
+{
+this->Reserved3[i]=' ';
+}
+for(int i=0;i<sizeof(this->NewPassword);i++)
+{
+this->NewPassword[i]=' ';
+}
+for(int i=0;i<sizeof(this->TraderName);i++)
+{
+this->TraderName[i]=' ';
+}
+this->LastPasswordChangeDate = LastPasswordChangeDate;
+std::copy(BrokerID,BrokerID+ sizeof(this->BrokerID), this->BrokerID);
+this->Reserved4 = ' ';
+this->BranchID = BranchID;
+this->VersionNumber = VersionNumber;
+this->Batch2StartTime = ' ';
+this->HostSwitchContext = ' ';
+for(int i=0;i<sizeof(this->Colour);i++)
+{
+this->Colour[i]=' ';
+}
+this->Reserved5 = ' ';
+this->UserType = UserType;
+this-> SequenceNumber = ' ';
+std::copy(WsClassName,WsClassName+ sizeof(this->WsClassName), this->WsClassName);
+this->BrokerStatus = ' ';
+this->ShowIndex = ' ';
+this->STRUCT = STRUCT;
+this->MemberType = ' ';
+this->ClearingStatus = ' ';
+std::copy(BrokerName,BrokerName+ sizeof(this->BrokerName), this->BrokerName);
+for(int i=0;i<sizeof(this->Reserved6);i++)
+{
+this->Reserved6[i]=' ';
+}
+for(int i=0;i<sizeof(this-> Reserved7);i++)
+{
+this-> Reserved7[i]=' ';
+}
+for(int i=0;i<sizeof(this->Reserved8);i++)
+{
+this->Reserved8[i]=' ';
+}
+}
+void MS_SIGNON:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->UserID = boost::endian::endian_reverse(this->UserID);
+this->LastPasswordChangeDate = boost::endian::endian_reverse(this->LastPasswordChangeDate);
+this->Reserved4 = boost::endian::endian_reverse(this->Reserved4);
+this->BranchID = boost::endian::endian_reverse(this->BranchID);
+this->VersionNumber = boost::endian::endian_reverse(this->VersionNumber);
+this->Batch2StartTime = boost::endian::endian_reverse(this->Batch2StartTime);
+this->HostSwitchContext = boost::endian::endian_reverse(this->HostSwitchContext);
+this->Reserved5 = boost::endian::endian_reverse(this->Reserved5);
+this->UserType = boost::endian::endian_reverse(this->UserType);
+this-> SequenceNumber = boost::endian::endian_reverse(this-> SequenceNumber);
+this->BrokerStatus = boost::endian::endian_reverse(this->BrokerStatus);
+this->ShowIndex = boost::endian::endian_reverse(this->ShowIndex);
+this->STRUCT.Flip_endian();
+this->MemberType = boost::endian::endian_reverse(this->MemberType);
+this->ClearingStatus = boost::endian::endian_reverse(this->ClearingStatus);
+}
+std::string MS_SIGNON:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("UserID" , this->UserID));
+addr_obj.push_back(json_spirit::Pair("Reserved1" , toString(this->Reserved1,sizeof(this->Reserved1))));
+addr_obj.push_back(json_spirit::Pair("Password2" , toString(this->Password2,sizeof(this->Password2))));
+addr_obj.push_back(json_spirit::Pair("Reserved3" , toString(this->Reserved3,sizeof(this->Reserved3))));
+addr_obj.push_back(json_spirit::Pair("NewPassword" , toString(this->NewPassword,sizeof(this->NewPassword))));
+addr_obj.push_back(json_spirit::Pair("TraderName" , toString(this->TraderName,sizeof(this->TraderName))));
+addr_obj.push_back(json_spirit::Pair("LastPasswordChangeDate" , this->LastPasswordChangeDate));
+addr_obj.push_back(json_spirit::Pair("BrokerID" , toString(this->BrokerID,sizeof(this->BrokerID))));
+addr_obj.push_back(json_spirit::Pair("Reserved4" , this->Reserved4));
+addr_obj.push_back(json_spirit::Pair("BranchID" , this->BranchID));
+addr_obj.push_back(json_spirit::Pair("VersionNumber" , this->VersionNumber));
+addr_obj.push_back(json_spirit::Pair("Batch2StartTime" , this->Batch2StartTime));
+addr_obj.push_back(json_spirit::Pair("HostSwitchContext" , this->HostSwitchContext));
+addr_obj.push_back(json_spirit::Pair("Colour" , toString(this->Colour,sizeof(this->Colour))));
+addr_obj.push_back(json_spirit::Pair("Reserved5" , this->Reserved5));
+addr_obj.push_back(json_spirit::Pair("UserType" , this->UserType));
+addr_obj.push_back(json_spirit::Pair(" SequenceNumber" , this-> SequenceNumber));
+addr_obj.push_back(json_spirit::Pair("WsClassName" , toString(this->WsClassName,sizeof(this->WsClassName))));
+addr_obj.push_back(json_spirit::Pair("BrokerStatus" , this->BrokerStatus));
+addr_obj.push_back(json_spirit::Pair("ShowIndex" , this->ShowIndex));
+name<<this->STRUCT.toJSON();
+addr_obj.push_back(json_spirit::Pair("MemberType" , this->MemberType));
+addr_obj.push_back(json_spirit::Pair("ClearingStatus" , this->ClearingStatus));
+addr_obj.push_back(json_spirit::Pair("BrokerName" , toString(this->BrokerName,sizeof(this->BrokerName))));
+addr_obj.push_back(json_spirit::Pair("Reserved6" , toString(this->Reserved6,sizeof(this->Reserved6))));
+addr_obj.push_back(json_spirit::Pair(" Reserved7" , toString(this-> Reserved7,sizeof(this-> Reserved7))));
+addr_obj.push_back(json_spirit::Pair("Reserved8" , toString(this->Reserved8,sizeof(this->Reserved8))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_ERROR_RESPONSE::MS_ERROR_RESPONSE()
+{
+}
+MS_ERROR_RESPONSE::MS_ERROR_RESPONSE(uint8_t data[])
+{
+*this=*((MS_ERROR_RESPONSE*)data);
+}
+MS_ERROR_RESPONSE::MS_ERROR_RESPONSE( uint8_t Key[],uint8_t ErrorMessage[])
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_ERROR_RESPONSE));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::SIGN_ON_REQUEST_OUT,(sizeof(MS_ERROR_RESPONSE) - sizeof(DIRECT_INTERFACE_HEADER)));
+std::copy(Key,Key+ sizeof(this->Key), this->Key);
+std::copy(ErrorMessage,ErrorMessage+ sizeof(this->ErrorMessage), this->ErrorMessage);
+}
+void MS_ERROR_RESPONSE:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string MS_ERROR_RESPONSE:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("Key" , toString(this->Key,sizeof(this->Key))));
+addr_obj.push_back(json_spirit::Pair("ErrorMessage" , toString(this->ErrorMessage,sizeof(this->ErrorMessage))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_SYSTEM_INFO_REQ::MS_SYSTEM_INFO_REQ()
+{
+}
+MS_SYSTEM_INFO_REQ::MS_SYSTEM_INFO_REQ(uint8_t data[])
+{
+*this=*((MS_SYSTEM_INFO_REQ*)data);
+}
+MS_SYSTEM_INFO_REQ::MS_SYSTEM_INFO_REQ( )
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_SYSTEM_INFO_REQ));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::SYSTEM_INFORMATION_IN,(sizeof(MS_SYSTEM_INFO_REQ) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->LastUpdatePortfolioTIme = "0000";
+}
+void MS_SYSTEM_INFO_REQ:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->LastUpdatePortfolioTIme = boost::endian::endian_reverse(this->LastUpdatePortfolioTIme);
+}
+std::string MS_SYSTEM_INFO_REQ:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("LastUpdatePortfolioTIme" , this->LastUpdatePortfolioTIme));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_SYSTEM_INFO_DATA::MS_SYSTEM_INFO_DATA()
+{
+}
+MS_SYSTEM_INFO_DATA::MS_SYSTEM_INFO_DATA(uint8_t data[])
+{
+*this=*((MS_SYSTEM_INFO_DATA*)data);
+}
+MS_SYSTEM_INFO_DATA::MS_SYSTEM_INFO_DATA( ST_MARKET_STATUS st_market_status,ST_EX_MARKET_STATUS st_Ex_market_status,ST_PL_MARKET_STATUS st_pl_market_status,uint8_t UpdatePortfolio,uint32_t MarketIndex,uint16_t DefaultSettlementPeriod_Normal,uint16_t DefaultSettlementPeriod_Spot,uint16_t DefaultSettlementPeriod_Auction,uint16_t CompetitorPeriod,uint16_t SolicitorPeriod,uint16_t WarningPercent,uint16_t VolumeFreezePercent,uint16_t SnapQuoteTime,uint8_t Reserved[],uint32_t BoardLotQuantity,uint32_t TickSize,uint16_t MaximumGtcDays,ST_STOCK_ELIGIBLE_INDICATORS st_stock_eligible_indicators,uint16_t DisclosedQuantityPercentAllowed,uint32_t RiskFreeInterestRate)
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_SYSTEM_INFO_DATA));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::SYSTEM_INFORMATION_OUT,(sizeof(MS_SYSTEM_INFO_DATA) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->st_market_status = st_market_status;
+this->st_Ex_market_status = st_Ex_market_status;
+this->st_pl_market_status = st_pl_market_status;
+this->UpdatePortfolio = UpdatePortfolio;
+this->MarketIndex = MarketIndex;
+this->DefaultSettlementPeriod_Normal = DefaultSettlementPeriod_Normal;
+this->DefaultSettlementPeriod_Spot = DefaultSettlementPeriod_Spot;
+this->DefaultSettlementPeriod_Auction = DefaultSettlementPeriod_Auction;
+this->CompetitorPeriod = CompetitorPeriod;
+this->SolicitorPeriod = SolicitorPeriod;
+this->WarningPercent = WarningPercent;
+this->VolumeFreezePercent = VolumeFreezePercent;
+this->SnapQuoteTime = SnapQuoteTime;
+std::copy(Reserved,Reserved+ sizeof(this->Reserved), this->Reserved);
+this->BoardLotQuantity = BoardLotQuantity;
+this->TickSize = TickSize;
+this->MaximumGtcDays = MaximumGtcDays;
+this->st_stock_eligible_indicators = st_stock_eligible_indicators;
+this->DisclosedQuantityPercentAllowed = DisclosedQuantityPercentAllowed;
+this->RiskFreeInterestRate = RiskFreeInterestRate;
+}
+void MS_SYSTEM_INFO_DATA:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->st_market_status.Flip_endian();
+this->st_Ex_market_status.Flip_endian();
+this->st_pl_market_status.Flip_endian();
+this->UpdatePortfolio = boost::endian::endian_reverse(this->UpdatePortfolio);
+this->MarketIndex = boost::endian::endian_reverse(this->MarketIndex);
+this->DefaultSettlementPeriod_Normal = boost::endian::endian_reverse(this->DefaultSettlementPeriod_Normal);
+this->DefaultSettlementPeriod_Spot = boost::endian::endian_reverse(this->DefaultSettlementPeriod_Spot);
+this->DefaultSettlementPeriod_Auction = boost::endian::endian_reverse(this->DefaultSettlementPeriod_Auction);
+this->CompetitorPeriod = boost::endian::endian_reverse(this->CompetitorPeriod);
+this->SolicitorPeriod = boost::endian::endian_reverse(this->SolicitorPeriod);
+this->WarningPercent = boost::endian::endian_reverse(this->WarningPercent);
+this->VolumeFreezePercent = boost::endian::endian_reverse(this->VolumeFreezePercent);
+this->SnapQuoteTime = boost::endian::endian_reverse(this->SnapQuoteTime);
+this->BoardLotQuantity = boost::endian::endian_reverse(this->BoardLotQuantity);
+this->TickSize = boost::endian::endian_reverse(this->TickSize);
+this->MaximumGtcDays = boost::endian::endian_reverse(this->MaximumGtcDays);
+this->st_stock_eligible_indicators.Flip_endian();
+this->DisclosedQuantityPercentAllowed = boost::endian::endian_reverse(this->DisclosedQuantityPercentAllowed);
+this->RiskFreeInterestRate = boost::endian::endian_reverse(this->RiskFreeInterestRate);
+}
+std::string MS_SYSTEM_INFO_DATA:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+name<<this->st_market_status.toJSON();
+name<<this->st_Ex_market_status.toJSON();
+name<<this->st_pl_market_status.toJSON();
+addr_obj.push_back(json_spirit::Pair("UpdatePortfolio" , this->UpdatePortfolio));
+addr_obj.push_back(json_spirit::Pair("MarketIndex" , this->MarketIndex));
+addr_obj.push_back(json_spirit::Pair("DefaultSettlementPeriod_Normal" , this->DefaultSettlementPeriod_Normal));
+addr_obj.push_back(json_spirit::Pair("DefaultSettlementPeriod_Spot" , this->DefaultSettlementPeriod_Spot));
+addr_obj.push_back(json_spirit::Pair("DefaultSettlementPeriod_Auction" , this->DefaultSettlementPeriod_Auction));
+addr_obj.push_back(json_spirit::Pair("CompetitorPeriod" , this->CompetitorPeriod));
+addr_obj.push_back(json_spirit::Pair("SolicitorPeriod" , this->SolicitorPeriod));
+addr_obj.push_back(json_spirit::Pair("WarningPercent" , this->WarningPercent));
+addr_obj.push_back(json_spirit::Pair("VolumeFreezePercent" , this->VolumeFreezePercent));
+addr_obj.push_back(json_spirit::Pair("SnapQuoteTime" , this->SnapQuoteTime));
+addr_obj.push_back(json_spirit::Pair("Reserved" , toString(this->Reserved,sizeof(this->Reserved))));
+addr_obj.push_back(json_spirit::Pair("BoardLotQuantity" , this->BoardLotQuantity));
+addr_obj.push_back(json_spirit::Pair("TickSize" , this->TickSize));
+addr_obj.push_back(json_spirit::Pair("MaximumGtcDays" , this->MaximumGtcDays));
+name<<this->st_stock_eligible_indicators.toJSON();
+addr_obj.push_back(json_spirit::Pair("DisclosedQuantityPercentAllowed" , this->DisclosedQuantityPercentAllowed));
+addr_obj.push_back(json_spirit::Pair("RiskFreeInterestRate" , this->RiskFreeInterestRate));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+ST_MARKET_STATUS::ST_MARKET_STATUS()
+{
+}
+ST_MARKET_STATUS::ST_MARKET_STATUS(uint8_t data[])
+{
+*this=*((ST_MARKET_STATUS*)data);
+}
+ST_MARKET_STATUS::ST_MARKET_STATUS( uint16_t  Normal,uint16_t  Oddlot,uint16_t  Spot,uint16_t  Auction)
+{
+this->Normal = Normal;
+this->Oddlot = Oddlot;
+this->Spot = Spot;
+this-> Auction =  Auction;
+}
+void ST_MARKET_STATUS:: Flip_endian()
+{
+this->Normal = boost::endian::endian_reverse(this->Normal);
+this->Oddlot = boost::endian::endian_reverse(this->Oddlot);
+this->Spot = boost::endian::endian_reverse(this->Spot);
+this-> Auction = boost::endian::endian_reverse(this-> Auction);
+}
+std::string ST_MARKET_STATUS:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("Normal" , this->Normal));
+addr_obj.push_back(json_spirit::Pair("Oddlot" , this->Oddlot));
+addr_obj.push_back(json_spirit::Pair("Spot" , this->Spot));
+addr_obj.push_back(json_spirit::Pair(" Auction" , this-> Auction));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+ST_EX_MARKET_STATUS::ST_EX_MARKET_STATUS()
+{
+}
+ST_EX_MARKET_STATUS::ST_EX_MARKET_STATUS(uint8_t data[])
+{
+*this=*((ST_EX_MARKET_STATUS*)data);
+}
+ST_EX_MARKET_STATUS::ST_EX_MARKET_STATUS( uint16_t  Normal,uint16_t  Oddlot,uint16_t  Spot,uint16_t  Auction)
+{
+this->Normal = Normal;
+this->Oddlot = Oddlot;
+this->Spot = Spot;
+this-> Auction =  Auction;
+}
+void ST_EX_MARKET_STATUS:: Flip_endian()
+{
+this->Normal = boost::endian::endian_reverse(this->Normal);
+this->Oddlot = boost::endian::endian_reverse(this->Oddlot);
+this->Spot = boost::endian::endian_reverse(this->Spot);
+this-> Auction = boost::endian::endian_reverse(this-> Auction);
+}
+std::string ST_EX_MARKET_STATUS:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("Normal" , this->Normal));
+addr_obj.push_back(json_spirit::Pair("Oddlot" , this->Oddlot));
+addr_obj.push_back(json_spirit::Pair("Spot" , this->Spot));
+addr_obj.push_back(json_spirit::Pair(" Auction" , this-> Auction));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+ST_PL_MARKET_STATUS::ST_PL_MARKET_STATUS()
+{
+}
+ST_PL_MARKET_STATUS::ST_PL_MARKET_STATUS(uint8_t data[])
+{
+*this=*((ST_PL_MARKET_STATUS*)data);
+}
+ST_PL_MARKET_STATUS::ST_PL_MARKET_STATUS( uint16_t  Normal,uint16_t  Oddlot,uint16_t  Spot,uint16_t  Auction)
+{
+this->Normal = Normal;
+this->Oddlot = Oddlot;
+this->Spot = Spot;
+this-> Auction =  Auction;
+}
+void ST_PL_MARKET_STATUS:: Flip_endian()
+{
+this->Normal = boost::endian::endian_reverse(this->Normal);
+this->Oddlot = boost::endian::endian_reverse(this->Oddlot);
+this->Spot = boost::endian::endian_reverse(this->Spot);
+this-> Auction = boost::endian::endian_reverse(this-> Auction);
+}
+std::string ST_PL_MARKET_STATUS:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("Normal" , this->Normal));
+addr_obj.push_back(json_spirit::Pair("Oddlot" , this->Oddlot));
+addr_obj.push_back(json_spirit::Pair("Spot" , this->Spot));
+addr_obj.push_back(json_spirit::Pair(" Auction" , this-> Auction));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+ST_STOCK_ELIGIBLE_INDICATORS::ST_STOCK_ELIGIBLE_INDICATORS()
+{
+}
+ST_STOCK_ELIGIBLE_INDICATORS::ST_STOCK_ELIGIBLE_INDICATORS(uint8_t data[])
+{
+*this=*((ST_STOCK_ELIGIBLE_INDICATORS*)data);
+}
+ST_STOCK_ELIGIBLE_INDICATORS::ST_STOCK_ELIGIBLE_INDICATORS( uint8_t Reserved1,uint8_t BooksMerged,uint8_t MinimumFill,uint8_t AON,uint8_t Reserved2)
+{
+this->Reserved1 = Reserved1;
+this->BooksMerged = BooksMerged;
+this->MinimumFill = MinimumFill;
+this->AON = AON;
+this->Reserved2 = Reserved2;
+}
+void ST_STOCK_ELIGIBLE_INDICATORS:: Flip_endian()
+{
+this->Reserved1 = boost::endian::endian_reverse(this->Reserved1);
+this->BooksMerged = boost::endian::endian_reverse(this->BooksMerged);
+this->MinimumFill = boost::endian::endian_reverse(this->MinimumFill);
+this->AON = boost::endian::endian_reverse(this->AON);
+this->Reserved2 = boost::endian::endian_reverse(this->Reserved2);
+}
+std::string ST_STOCK_ELIGIBLE_INDICATORS:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("Reserved1" , this->Reserved1));
+addr_obj.push_back(json_spirit::Pair("BooksMerged" , this->BooksMerged));
+addr_obj.push_back(json_spirit::Pair("MinimumFill" , this->MinimumFill));
+addr_obj.push_back(json_spirit::Pair("AON" , this->AON));
+addr_obj.push_back(json_spirit::Pair("Reserved2" , this->Reserved2));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_UPDATE_LOCAL_DATABASE::MS_UPDATE_LOCAL_DATABASE()
+{
+}
+MS_UPDATE_LOCAL_DATABASE::MS_UPDATE_LOCAL_DATABASE(uint8_t data[])
+{
+*this=*((MS_UPDATE_LOCAL_DATABASE*)data);
+}
+MS_UPDATE_LOCAL_DATABASE::MS_UPDATE_LOCAL_DATABASE( uint32_t  LastUpdateSecurityTime,uint32_t  LastUpdateParticipantTime,uint32_t  LastUpdateInstrumentTime,uint32_t  LastUpdateIndexTime,uint8_t RequestForOpenOrders,uint8_t Reserved,ST_MARKET_STATUS  St_Market_Status,ST_EX_MARKET_STATUS  St_Ex_Market_Status,ST_PL_MARKET_STATUS  St_Pl_Market_Status)
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_UPDATE_LOCAL_DATABASE));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::UPDATE_LOCALDB_IN,(sizeof(MS_UPDATE_LOCAL_DATABASE) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->LastUpdateSecurityTime = LastUpdateSecurityTime;
+this->LastUpdateParticipantTime = LastUpdateParticipantTime;
+this->LastUpdateInstrumentTime = LastUpdateInstrumentTime;
+this->LastUpdateIndexTime = LastUpdateIndexTime;
+this->RequestForOpenOrders = RequestForOpenOrders;
+this->Reserved = Reserved;
+this->St_Market_Status = St_Market_Status;
+this-> St_Ex_Market_Status =  St_Ex_Market_Status;
+this-> St_Pl_Market_Status =  St_Pl_Market_Status;
+}
+void MS_UPDATE_LOCAL_DATABASE:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->LastUpdateSecurityTime = boost::endian::endian_reverse(this->LastUpdateSecurityTime);
+this->LastUpdateParticipantTime = boost::endian::endian_reverse(this->LastUpdateParticipantTime);
+this->LastUpdateInstrumentTime = boost::endian::endian_reverse(this->LastUpdateInstrumentTime);
+this->LastUpdateIndexTime = boost::endian::endian_reverse(this->LastUpdateIndexTime);
+this->RequestForOpenOrders = boost::endian::endian_reverse(this->RequestForOpenOrders);
+this->Reserved = boost::endian::endian_reverse(this->Reserved);
+this->St_Market_Status.Flip_endian();
+this-> St_Ex_Market_Status.Flip_endian();
+this-> St_Pl_Market_Status.Flip_endian();
+}
+std::string MS_UPDATE_LOCAL_DATABASE:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("LastUpdateSecurityTime" , this->LastUpdateSecurityTime));
+addr_obj.push_back(json_spirit::Pair("LastUpdateParticipantTime" , this->LastUpdateParticipantTime));
+addr_obj.push_back(json_spirit::Pair("LastUpdateInstrumentTime" , this->LastUpdateInstrumentTime));
+addr_obj.push_back(json_spirit::Pair("LastUpdateIndexTime" , this->LastUpdateIndexTime));
+addr_obj.push_back(json_spirit::Pair("RequestForOpenOrders" , this->RequestForOpenOrders));
+addr_obj.push_back(json_spirit::Pair("Reserved" , this->Reserved));
+name<<this->St_Market_Status.toJSON();
+name<<this-> St_Ex_Market_Status.toJSON();
+name<<this-> St_Pl_Market_Status.toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+UPDATE_LDB_HEADER::UPDATE_LDB_HEADER()
+{
+}
+UPDATE_LDB_HEADER::UPDATE_LDB_HEADER(uint8_t data[])
+{
+*this=*((UPDATE_LDB_HEADER*)data);
+}
+UPDATE_LDB_HEADER::UPDATE_LDB_HEADER( uint8_t Reserved[])
+{
+this->Direct_Interface_Header.set_values(sizeof(UPDATE_LDB_HEADER));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::UPDATE_LOCALDB_HEADER,(sizeof(UPDATE_LDB_HEADER) - sizeof(DIRECT_INTERFACE_HEADER)));
+std::copy(Reserved,Reserved+ sizeof(this->Reserved), this->Reserved);
+}
+void UPDATE_LDB_HEADER:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string UPDATE_LDB_HEADER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("Reserved" , toString(this->Reserved,sizeof(this->Reserved))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+INNER_MESSAGE_HEADER::INNER_MESSAGE_HEADER()
+{
+}
+INNER_MESSAGE_HEADER::INNER_MESSAGE_HEADER(uint8_t data[])
+{
+*this=*((INNER_MESSAGE_HEADER*)data);
+}
+INNER_MESSAGE_HEADER::INNER_MESSAGE_HEADER( uint32_t TraderId,uint32_t LogTime,uint8_t AlphaChar[],uint16_t  TransactionCode,uint16_t ErrorCode,uint64_t Timestamp,uint8_t Timestamp1[],uint8_t Timestamp2[],uint16_t  MessageLength)
+{
+this->TraderId = TraderId;
+this->LogTime = LogTime;
+std::copy(AlphaChar,AlphaChar+ sizeof(this->AlphaChar), this->AlphaChar);
+this-> TransactionCode =  TransactionCode;
+this->ErrorCode = ErrorCode;
+this->Timestamp = Timestamp;
+std::copy(Timestamp1,Timestamp1+ sizeof(this->Timestamp1), this->Timestamp1);
+std::copy(Timestamp2,Timestamp2+ sizeof(this->Timestamp2), this->Timestamp2);
+this-> MessageLength =  MessageLength;
+}
+void INNER_MESSAGE_HEADER:: Flip_endian()
+{
+this->TraderId = boost::endian::endian_reverse(this->TraderId);
+this->LogTime = boost::endian::endian_reverse(this->LogTime);
+this-> TransactionCode = boost::endian::endian_reverse(this-> TransactionCode);
+this->ErrorCode = boost::endian::endian_reverse(this->ErrorCode);
+this->Timestamp = boost::endian::endian_reverse(this->Timestamp);
+this-> MessageLength = boost::endian::endian_reverse(this-> MessageLength);
+}
+std::string INNER_MESSAGE_HEADER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("TraderId" , this->TraderId));
+addr_obj.push_back(json_spirit::Pair("LogTime" , this->LogTime));
+addr_obj.push_back(json_spirit::Pair("AlphaChar" , toString(this->AlphaChar,sizeof(this->AlphaChar))));
+addr_obj.push_back(json_spirit::Pair(" TransactionCode" , this-> TransactionCode));
+addr_obj.push_back(json_spirit::Pair("ErrorCode" , this->ErrorCode));
+addr_obj.push_back(json_spirit::Pair("Timestamp" , this->Timestamp));
+addr_obj.push_back(json_spirit::Pair("Timestamp1" , toString(this->Timestamp1,sizeof(this->Timestamp1))));
+addr_obj.push_back(json_spirit::Pair("Timestamp2" , toString(this->Timestamp2,sizeof(this->Timestamp2))));
+addr_obj.push_back(json_spirit::Pair(" MessageLength" , this-> MessageLength));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+UPDATE_LDB_DATA::UPDATE_LDB_DATA()
+{
+}
+UPDATE_LDB_DATA::UPDATE_LDB_DATA(uint8_t data[])
+{
+*this=*((UPDATE_LDB_DATA*)data);
+}
+UPDATE_LDB_DATA::UPDATE_LDB_DATA( INNER_MESSAGE_HEADER inner_message_header,uint8_t Data[])
+{
+this->Direct_Interface_Header.set_values(sizeof(UPDATE_LDB_DATA));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::UPDATE_LOCALDB_DATA,(sizeof(UPDATE_LDB_DATA) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->inner_message_header = inner_message_header;
+std::copy(Data,Data+ sizeof(this->Data), this->Data);
+}
+void UPDATE_LDB_DATA:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->inner_message_header.Flip_endian();
+}
+std::string UPDATE_LDB_DATA:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+name<<this->inner_message_header.toJSON();
+addr_obj.push_back(json_spirit::Pair("Data" , toString(this->Data,sizeof(this->Data))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+INDEX_DETAILS::INDEX_DETAILS()
+{
+}
+INDEX_DETAILS::INDEX_DETAILS(uint8_t data[])
+{
+*this=*((INDEX_DETAILS*)data);
+}
+INDEX_DETAILS::INDEX_DETAILS( uint8_t IndexName[],uint32_t Token,uint32_t LastUpdateDateTime)
+{
+std::copy(IndexName,IndexName+ sizeof(this->IndexName), this->IndexName);
+this->Token = Token;
+this->LastUpdateDateTime = LastUpdateDateTime;
+}
+void INDEX_DETAILS:: Flip_endian()
+{
+this->Token = boost::endian::endian_reverse(this->Token);
+this->LastUpdateDateTime = boost::endian::endian_reverse(this->LastUpdateDateTime);
+}
+std::string INDEX_DETAILS:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("IndexName" , toString(this->IndexName,sizeof(this->IndexName))));
+addr_obj.push_back(json_spirit::Pair("Token" , this->Token));
+addr_obj.push_back(json_spirit::Pair("LastUpdateDateTime" , this->LastUpdateDateTime));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_DOWNLOAD_INDEX::MS_DOWNLOAD_INDEX()
+{
+}
+MS_DOWNLOAD_INDEX::MS_DOWNLOAD_INDEX(uint8_t data[])
+{
+*this=*((MS_DOWNLOAD_INDEX*)data);
+}
+MS_DOWNLOAD_INDEX::MS_DOWNLOAD_INDEX( INDEX_DETAILS Index_Details[])
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_DOWNLOAD_INDEX));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::BCAST_INDEX_MSTR_CHG ,(sizeof(MS_DOWNLOAD_INDEX) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->Index_Details[0] = Index_Details[0];
+this->Index_Details[1] = Index_Details[1];
+this->Index_Details[2] = Index_Details[2];
+this->Index_Details[3] = Index_Details[3];
+this->Index_Details[4] = Index_Details[4];
+this->Index_Details[5] = Index_Details[5];
+this->Index_Details[6] = Index_Details[6];
+this->Index_Details[7] = Index_Details[7];
+this->Index_Details[8] = Index_Details[8];
+this->Index_Details[9] = Index_Details[9];
+this->Index_Details[10] = Index_Details[10];
+this->Index_Details[11] = Index_Details[11];
+this->Index_Details[12] = Index_Details[12];
+this->Index_Details[13] = Index_Details[13];
+this->Index_Details[14] = Index_Details[14];
+this->Index_Details[15] = Index_Details[15];
+this->Index_Details[16] = Index_Details[16];
+}
+void MS_DOWNLOAD_INDEX:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->Index_Details[0].Flip_endian();
+this->Index_Details[1].Flip_endian();
+this->Index_Details[2].Flip_endian();
+this->Index_Details[3].Flip_endian();
+this->Index_Details[4].Flip_endian();
+this->Index_Details[5].Flip_endian();
+this->Index_Details[6].Flip_endian();
+this->Index_Details[7].Flip_endian();
+this->Index_Details[8].Flip_endian();
+this->Index_Details[9].Flip_endian();
+this->Index_Details[10].Flip_endian();
+this->Index_Details[11].Flip_endian();
+this->Index_Details[12].Flip_endian();
+this->Index_Details[13].Flip_endian();
+this->Index_Details[14].Flip_endian();
+this->Index_Details[15].Flip_endian();
+this->Index_Details[16].Flip_endian();
+}
+std::string MS_DOWNLOAD_INDEX:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+name<<this->Index_Details[0].toJSON();
+name<<this->Index_Details[1].toJSON();
+name<<this->Index_Details[2].toJSON();
+name<<this->Index_Details[3].toJSON();
+name<<this->Index_Details[4].toJSON();
+name<<this->Index_Details[5].toJSON();
+name<<this->Index_Details[6].toJSON();
+name<<this->Index_Details[7].toJSON();
+name<<this->Index_Details[8].toJSON();
+name<<this->Index_Details[9].toJSON();
+name<<this->Index_Details[10].toJSON();
+name<<this->Index_Details[11].toJSON();
+name<<this->Index_Details[12].toJSON();
+name<<this->Index_Details[13].toJSON();
+name<<this->Index_Details[14].toJSON();
+name<<this->Index_Details[15].toJSON();
+name<<this->Index_Details[16].toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+BCAST_INDEX_MAP_DETAILS::BCAST_INDEX_MAP_DETAILS()
+{
+}
+BCAST_INDEX_MAP_DETAILS::BCAST_INDEX_MAP_DETAILS(uint8_t data[])
+{
+*this=*((BCAST_INDEX_MAP_DETAILS*)data);
+}
+BCAST_INDEX_MAP_DETAILS::BCAST_INDEX_MAP_DETAILS( uint8_t BcastName[],uint8_t ChangedName[],uint8_t DeleteFlag,uint32_t LastUpdateDateTime)
+{
+std::copy(BcastName,BcastName+ sizeof(this->BcastName), this->BcastName);
+std::copy(ChangedName,ChangedName+ sizeof(this->ChangedName), this->ChangedName);
+this->DeleteFlag = DeleteFlag;
+this->LastUpdateDateTime = LastUpdateDateTime;
+}
+void BCAST_INDEX_MAP_DETAILS:: Flip_endian()
+{
+this->DeleteFlag = boost::endian::endian_reverse(this->DeleteFlag);
+this->LastUpdateDateTime = boost::endian::endian_reverse(this->LastUpdateDateTime);
+}
+std::string BCAST_INDEX_MAP_DETAILS:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("BcastName" , toString(this->BcastName,sizeof(this->BcastName))));
+addr_obj.push_back(json_spirit::Pair("ChangedName" , toString(this->ChangedName,sizeof(this->ChangedName))));
+addr_obj.push_back(json_spirit::Pair("DeleteFlag" , this->DeleteFlag));
+addr_obj.push_back(json_spirit::Pair("LastUpdateDateTime" , this->LastUpdateDateTime));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_DOWNLOAD_INDEX_MAP::MS_DOWNLOAD_INDEX_MAP()
+{
+}
+MS_DOWNLOAD_INDEX_MAP::MS_DOWNLOAD_INDEX_MAP(uint8_t data[])
+{
+*this=*((MS_DOWNLOAD_INDEX_MAP*)data);
+}
+MS_DOWNLOAD_INDEX_MAP::MS_DOWNLOAD_INDEX_MAP( uint16_t NoOfRecords,BCAST_INDEX_MAP_DETAILS bcast_index_map_details[])
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_DOWNLOAD_INDEX_MAP));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::BCAST_INDEX_MAP_TABLE ,(sizeof(MS_DOWNLOAD_INDEX_MAP) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->NoOfRecords = NoOfRecords;
+this->bcast_index_map_details[0] = bcast_index_map_details[0];
+this->bcast_index_map_details[1] = bcast_index_map_details[1];
+this->bcast_index_map_details[2] = bcast_index_map_details[2];
+this->bcast_index_map_details[3] = bcast_index_map_details[3];
+this->bcast_index_map_details[4] = bcast_index_map_details[4];
+this->bcast_index_map_details[5] = bcast_index_map_details[5];
+this->bcast_index_map_details[6] = bcast_index_map_details[6];
+this->bcast_index_map_details[7] = bcast_index_map_details[7];
+this->bcast_index_map_details[8] = bcast_index_map_details[8];
+this->bcast_index_map_details[9] = bcast_index_map_details[9];
+}
+void MS_DOWNLOAD_INDEX_MAP:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->NoOfRecords = boost::endian::endian_reverse(this->NoOfRecords);
+this->bcast_index_map_details[0].Flip_endian();
+this->bcast_index_map_details[1].Flip_endian();
+this->bcast_index_map_details[2].Flip_endian();
+this->bcast_index_map_details[3].Flip_endian();
+this->bcast_index_map_details[4].Flip_endian();
+this->bcast_index_map_details[5].Flip_endian();
+this->bcast_index_map_details[6].Flip_endian();
+this->bcast_index_map_details[7].Flip_endian();
+this->bcast_index_map_details[8].Flip_endian();
+this->bcast_index_map_details[9].Flip_endian();
+}
+std::string MS_DOWNLOAD_INDEX_MAP:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("NoOfRecords" , this->NoOfRecords));
+name<<this->bcast_index_map_details[0].toJSON();
+name<<this->bcast_index_map_details[1].toJSON();
+name<<this->bcast_index_map_details[2].toJSON();
+name<<this->bcast_index_map_details[3].toJSON();
+name<<this->bcast_index_map_details[4].toJSON();
+name<<this->bcast_index_map_details[5].toJSON();
+name<<this->bcast_index_map_details[6].toJSON();
+name<<this->bcast_index_map_details[7].toJSON();
+name<<this->bcast_index_map_details[8].toJSON();
+name<<this->bcast_index_map_details[9].toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+UPDATE_LOCAL_DB_TRAILER::UPDATE_LOCAL_DB_TRAILER()
+{
+}
+UPDATE_LOCAL_DB_TRAILER::UPDATE_LOCAL_DB_TRAILER(uint8_t data[])
+{
+*this=*((UPDATE_LOCAL_DB_TRAILER*)data);
+}
+UPDATE_LOCAL_DB_TRAILER::UPDATE_LOCAL_DB_TRAILER( uint8_t Reserved[])
+{
+this->Direct_Interface_Header.set_values(sizeof(UPDATE_LOCAL_DB_TRAILER));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::UPDATE_LOCALDB_TRAILER,(sizeof(UPDATE_LOCAL_DB_TRAILER) - sizeof(DIRECT_INTERFACE_HEADER)));
+std::copy(Reserved,Reserved+ sizeof(this->Reserved), this->Reserved);
+}
+void UPDATE_LOCAL_DB_TRAILER:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string UPDATE_LOCAL_DB_TRAILER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("Reserved" , toString(this->Reserved,sizeof(this->Reserved))));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+EXCH_PORTFOLIO_REQ::EXCH_PORTFOLIO_REQ()
+{
+}
+EXCH_PORTFOLIO_REQ::EXCH_PORTFOLIO_REQ(uint8_t data[])
+{
+*this=*((EXCH_PORTFOLIO_REQ*)data);
+}
+EXCH_PORTFOLIO_REQ::EXCH_PORTFOLIO_REQ( uint32_t LastUpdateDtTime)
+{
+this->Direct_Interface_Header.set_values(sizeof(EXCH_PORTFOLIO_REQ));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::EXCH_PORTF_IN,(sizeof(EXCH_PORTFOLIO_REQ) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->LastUpdateDtTime = LastUpdateDtTime;
+}
+void EXCH_PORTFOLIO_REQ:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->LastUpdateDtTime = boost::endian::endian_reverse(this->LastUpdateDtTime);
+}
+std::string EXCH_PORTFOLIO_REQ:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("LastUpdateDtTime" , this->LastUpdateDtTime));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+PORTFOLIO_DATA::PORTFOLIO_DATA()
+{
+}
+PORTFOLIO_DATA::PORTFOLIO_DATA(uint8_t data[])
+{
+*this=*((PORTFOLIO_DATA*)data);
+}
+PORTFOLIO_DATA::PORTFOLIO_DATA( uint8_t Portfolio[],uint32_t Token,uint32_t LastUpdateDtTime,uint8_t DeleteFlag)
+{
+std::copy(Portfolio,Portfolio+ sizeof(this->Portfolio), this->Portfolio);
+this->Token = Token;
+this->LastUpdateDtTime = LastUpdateDtTime;
+this->DeleteFlag = DeleteFlag;
+}
+void PORTFOLIO_DATA:: Flip_endian()
+{
+this->Token = boost::endian::endian_reverse(this->Token);
+this->LastUpdateDtTime = boost::endian::endian_reverse(this->LastUpdateDtTime);
+this->DeleteFlag = boost::endian::endian_reverse(this->DeleteFlag);
+}
+std::string PORTFOLIO_DATA:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ addr_obj.push_back(json_spirit::Pair("Portfolio" , toString(this->Portfolio,sizeof(this->Portfolio))));
+addr_obj.push_back(json_spirit::Pair("Token" , this->Token));
+addr_obj.push_back(json_spirit::Pair("LastUpdateDtTime" , this->LastUpdateDtTime));
+addr_obj.push_back(json_spirit::Pair("DeleteFlag" , this->DeleteFlag));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+EXCH_PORTFOLIO_RESP::EXCH_PORTFOLIO_RESP()
+{
+}
+EXCH_PORTFOLIO_RESP::EXCH_PORTFOLIO_RESP(uint8_t data[])
+{
+*this=*((EXCH_PORTFOLIO_RESP*)data);
+}
+EXCH_PORTFOLIO_RESP::EXCH_PORTFOLIO_RESP( uint16_t NoOf_Records,uint8_t MoreRecords,uint8_t Filler,PORTFOLIO_DATA portfoliio_data[])
+{
+this->Direct_Interface_Header.set_values(sizeof(EXCH_PORTFOLIO_RESP));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::EXCH_PORTF_OUT,(sizeof(EXCH_PORTFOLIO_RESP) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->NoOf_Records = NoOf_Records;
+this->MoreRecords = MoreRecords;
+this->Filler = Filler;
+this->portfoliio_data[0] = portfoliio_data[0];
+this->portfoliio_data[1] = portfoliio_data[1];
+this->portfoliio_data[2] = portfoliio_data[2];
+this->portfoliio_data[3] = portfoliio_data[3];
+this->portfoliio_data[4] = portfoliio_data[4];
+this->portfoliio_data[5] = portfoliio_data[5];
+this->portfoliio_data[6] = portfoliio_data[6];
+this->portfoliio_data[7] = portfoliio_data[7];
+this->portfoliio_data[8] = portfoliio_data[8];
+this->portfoliio_data[9] = portfoliio_data[9];
+this->portfoliio_data[10] = portfoliio_data[10];
+this->portfoliio_data[11] = portfoliio_data[11];
+this->portfoliio_data[12] = portfoliio_data[12];
+this->portfoliio_data[13] = portfoliio_data[13];
+this->portfoliio_data[14] = portfoliio_data[14];
+}
+void EXCH_PORTFOLIO_RESP:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->NoOf_Records = boost::endian::endian_reverse(this->NoOf_Records);
+this->MoreRecords = boost::endian::endian_reverse(this->MoreRecords);
+this->Filler = boost::endian::endian_reverse(this->Filler);
+this->portfoliio_data[0].Flip_endian();
+this->portfoliio_data[1].Flip_endian();
+this->portfoliio_data[2].Flip_endian();
+this->portfoliio_data[3].Flip_endian();
+this->portfoliio_data[4].Flip_endian();
+this->portfoliio_data[5].Flip_endian();
+this->portfoliio_data[6].Flip_endian();
+this->portfoliio_data[7].Flip_endian();
+this->portfoliio_data[8].Flip_endian();
+this->portfoliio_data[9].Flip_endian();
+this->portfoliio_data[10].Flip_endian();
+this->portfoliio_data[11].Flip_endian();
+this->portfoliio_data[12].Flip_endian();
+this->portfoliio_data[13].Flip_endian();
+this->portfoliio_data[14].Flip_endian();
+}
+std::string EXCH_PORTFOLIO_RESP:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("NoOf_Records" , this->NoOf_Records));
+addr_obj.push_back(json_spirit::Pair("MoreRecords" , this->MoreRecords));
+addr_obj.push_back(json_spirit::Pair("Filler" , this->Filler));
+name<<this->portfoliio_data[0].toJSON();
+name<<this->portfoliio_data[1].toJSON();
+name<<this->portfoliio_data[2].toJSON();
+name<<this->portfoliio_data[3].toJSON();
+name<<this->portfoliio_data[4].toJSON();
+name<<this->portfoliio_data[5].toJSON();
+name<<this->portfoliio_data[6].toJSON();
+name<<this->portfoliio_data[7].toJSON();
+name<<this->portfoliio_data[8].toJSON();
+name<<this->portfoliio_data[9].toJSON();
+name<<this->portfoliio_data[10].toJSON();
+name<<this->portfoliio_data[11].toJSON();
+name<<this->portfoliio_data[12].toJSON();
+name<<this->portfoliio_data[13].toJSON();
+name<<this->portfoliio_data[14].toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_MESSAGE_DOWNLOAD::MS_MESSAGE_DOWNLOAD()
+{
+}
+MS_MESSAGE_DOWNLOAD::MS_MESSAGE_DOWNLOAD(uint8_t data[])
+{
+*this=*((MS_MESSAGE_DOWNLOAD*)data);
+}
+MS_MESSAGE_DOWNLOAD::MS_MESSAGE_DOWNLOAD( uint64_t SequenceNumber)
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_MESSAGE_DOWNLOAD));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::DOWNLOAD_REQUEST,(sizeof(MS_MESSAGE_DOWNLOAD) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->SequenceNumber = SequenceNumber;
+}
+void MS_MESSAGE_DOWNLOAD:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->SequenceNumber = boost::endian::endian_reverse(this->SequenceNumber);
+}
+std::string MS_MESSAGE_DOWNLOAD:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+addr_obj.push_back(json_spirit::Pair("SequenceNumber" , this->SequenceNumber));
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_MESSAGE_DOWNLOAD_HEADER::MS_MESSAGE_DOWNLOAD_HEADER()
+{
+}
+MS_MESSAGE_DOWNLOAD_HEADER::MS_MESSAGE_DOWNLOAD_HEADER(uint8_t data[])
+{
+*this=*((MS_MESSAGE_DOWNLOAD_HEADER*)data);
+}
+MS_MESSAGE_DOWNLOAD_HEADER::MS_MESSAGE_DOWNLOAD_HEADER( )
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_MESSAGE_DOWNLOAD_HEADER));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::HEADER_RECORD,(sizeof(MS_MESSAGE_DOWNLOAD_HEADER) - sizeof(DIRECT_INTERFACE_HEADER)));
+}
+void MS_MESSAGE_DOWNLOAD_HEADER:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string MS_MESSAGE_DOWNLOAD_HEADER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_MESSAGE_DOWNLOAD_DATA::MS_MESSAGE_DOWNLOAD_DATA()
+{
+}
+MS_MESSAGE_DOWNLOAD_DATA::MS_MESSAGE_DOWNLOAD_DATA(uint8_t data[])
+{
+*this=*((MS_MESSAGE_DOWNLOAD_DATA*)data);
+}
+MS_MESSAGE_DOWNLOAD_DATA::MS_MESSAGE_DOWNLOAD_DATA( INNER_MESSAGE_HEADER Inner_message_header)
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_MESSAGE_DOWNLOAD_DATA));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::MESSAGE_RECORD,(sizeof(MS_MESSAGE_DOWNLOAD_DATA) - sizeof(DIRECT_INTERFACE_HEADER)));
+this->Inner_message_header = Inner_message_header;
+}
+void MS_MESSAGE_DOWNLOAD_DATA:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+this->Inner_message_header.Flip_endian();
+}
+std::string MS_MESSAGE_DOWNLOAD_DATA:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+name<<this->Inner_message_header.toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_MESSAGE_DOWNLOAD_TRAILER::MS_MESSAGE_DOWNLOAD_TRAILER()
+{
+}
+MS_MESSAGE_DOWNLOAD_TRAILER::MS_MESSAGE_DOWNLOAD_TRAILER(uint8_t data[])
+{
+*this=*((MS_MESSAGE_DOWNLOAD_TRAILER*)data);
+}
+MS_MESSAGE_DOWNLOAD_TRAILER::MS_MESSAGE_DOWNLOAD_TRAILER( )
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_MESSAGE_DOWNLOAD_TRAILER));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::TRAILER_RECORD,(sizeof(MS_MESSAGE_DOWNLOAD_TRAILER) - sizeof(DIRECT_INTERFACE_HEADER)));
+}
+void MS_MESSAGE_DOWNLOAD_TRAILER:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string MS_MESSAGE_DOWNLOAD_TRAILER:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+MS_SIGNOFF::MS_SIGNOFF()
+{
+}
+MS_SIGNOFF::MS_SIGNOFF(uint8_t data[])
+{
+*this=*((MS_SIGNOFF*)data);
+}
+MS_SIGNOFF::MS_SIGNOFF( )
+{
+this->Direct_Interface_Header.set_values(sizeof(MS_SIGNOFF));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::SIGN_OFF_REQUEST_IN,(sizeof(MS_SIGNOFF) - sizeof(DIRECT_INTERFACE_HEADER)));
+}
+void MS_SIGNOFF:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string MS_SIGNOFF:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}
+HEARTBEAT::HEARTBEAT()
+{
+}
+HEARTBEAT::HEARTBEAT(uint8_t data[])
+{
+*this=*((HEARTBEAT*)data);
+}
+HEARTBEAT::HEARTBEAT( )
+{
+this->Direct_Interface_Header.set_values(sizeof(HEARTBEAT));
+this->Message_Header.set_values(NNF_Constants::TransactionCode::HEART_BEAT,(sizeof(HEARTBEAT) - sizeof(DIRECT_INTERFACE_HEADER)));
+}
+void HEARTBEAT:: Flip_endian()
+{
+this->Direct_Interface_Header.Flip_endian();
+this-> Message_Header.Flip_endian();
+}
+std::string HEARTBEAT:: toJSON()
+{
+std::stringstream name;
+ json_spirit::Object addr_obj;
+ name<<this->Direct_Interface_Header.toJSON();
+name<<this-> Message_Header.toJSON();
+
+write(addr_obj, name, json_spirit::pretty_print);
+return name.str();
+}

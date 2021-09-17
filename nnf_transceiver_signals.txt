@@ -1,0 +1,16 @@
+boost::signals2::signal<void(GR_RESPONSE*)> sig_RECEIVE_GR_RESPONSE;
+boost::signals2::signal<void(BOX_SIGN_ON_REQUEST_OUT*)> sig_RECEIVE_BOX_SIGN_ON_REQUEST_OUT;
+boost::signals2::signal<void(MS_SIGNON*)> sig_RECEIVE_MS_SIGNON;
+boost::signals2::signal<void(MS_ERROR_RESPONSE*)> sig_RECEIVE_MS_ERROR_RESPONSE;
+boost::signals2::signal<void(MS_SYSTEM_INFO_DATA*)> sig_RECEIVE_MS_SYSTEM_INFO_DATA;
+boost::signals2::signal<void(MS_UPDATE_LOCAL_DATABASE*)> sig_RECEIVE_MS_UPDATE_LOCAL_DATABASE;
+boost::signals2::signal<void(UPDATE_LDB_HEADER*)> sig_RECEIVE_UPDATE_LDB_HEADER;
+boost::signals2::signal<void(UPDATE_LDB_DATA*)> sig_RECEIVE_UPDATE_LDB_DATA;
+boost::signals2::signal<void(MS_DOWNLOAD_INDEX*)> sig_RECEIVE_MS_DOWNLOAD_INDEX;
+boost::signals2::signal<void(MS_DOWNLOAD_INDEX_MAP*)> sig_RECEIVE_MS_DOWNLOAD_INDEX_MAP;
+boost::signals2::signal<void(UPDATE_LOCAL_DB_TRAILER*)> sig_RECEIVE_UPDATE_LOCAL_DB_TRAILER;
+boost::signals2::signal<void(EXCH_PORTFOLIO_RESP*)> sig_RECEIVE_EXCH_PORTFOLIO_RESP;
+boost::signals2::signal<void(MS_MESSAGE_DOWNLOAD_HEADER*)> sig_RECEIVE_MS_MESSAGE_DOWNLOAD_HEADER;
+boost::signals2::signal<void(MS_MESSAGE_DOWNLOAD_DATA*)> sig_RECEIVE_MS_MESSAGE_DOWNLOAD_DATA;
+boost::signals2::signal<void(MS_MESSAGE_DOWNLOAD_TRAILER*)> sig_RECEIVE_MS_MESSAGE_DOWNLOAD_TRAILER;
+boost::signals2::signal<void(MS_SIGNOFF*)> sig_RECEIVE_MS_SIGNOFF;

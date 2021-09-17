@@ -1,0 +1,16 @@
+Transciver1.sig_RECEIVE_GR_RESPONSE.connect(boost::bind(&NNF_logIN::RECEIVE_GR_RESPONSE, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_BOX_SIGN_ON_REQUEST_OUT.connect(boost::bind(&NNF_logIN::RECEIVE_BOX_SIGN_ON_REQUEST_OUT, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_SIGNON.connect(boost::bind(&NNF_logIN::RECEIVE_MS_SIGNON, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_ERROR_RESPONSE.connect(boost::bind(&NNF_logIN::RECEIVE_MS_ERROR_RESPONSE, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_SYSTEM_INFO_DATA.connect(boost::bind(&NNF_logIN::RECEIVE_MS_SYSTEM_INFO_DATA, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_UPDATE_LOCAL_DATABASE.connect(boost::bind(&NNF_logIN::RECEIVE_MS_UPDATE_LOCAL_DATABASE, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_UPDATE_LDB_HEADER.connect(boost::bind(&NNF_logIN::RECEIVE_UPDATE_LDB_HEADER, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_UPDATE_LDB_DATA.connect(boost::bind(&NNF_logIN::RECEIVE_UPDATE_LDB_DATA, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_DOWNLOAD_INDEX.connect(boost::bind(&NNF_logIN::RECEIVE_MS_DOWNLOAD_INDEX, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_DOWNLOAD_INDEX_MAP.connect(boost::bind(&NNF_logIN::RECEIVE_MS_DOWNLOAD_INDEX_MAP, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_UPDATE_LOCAL_DB_TRAILER.connect(boost::bind(&NNF_logIN::RECEIVE_UPDATE_LOCAL_DB_TRAILER, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_EXCH_PORTFOLIO_RESP.connect(boost::bind(&NNF_logIN::RECEIVE_EXCH_PORTFOLIO_RESP, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_MESSAGE_DOWNLOAD_HEADER.connect(boost::bind(&NNF_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD_HEADER, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_MESSAGE_DOWNLOAD_DATA.connect(boost::bind(&NNF_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD_DATA, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_MESSAGE_DOWNLOAD_TRAILER.connect(boost::bind(&NNF_logIN::RECEIVE_MS_MESSAGE_DOWNLOAD_TRAILER, &nnf_logIn, _1));
+Transciver1.sig_RECEIVE_MS_SIGNOFF.connect(boost::bind(&NNF_logIN::RECEIVE_MS_SIGNOFF, &nnf_logIn, _1));
