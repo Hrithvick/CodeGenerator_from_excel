@@ -14,6 +14,8 @@ file_for_host_assembler = open('host_assembler.txt','w')
 file_for_host_transceiver_signals = open('host_transceiver_signals.txt','w')
 file_for_host_switchCase = open('host_switchCase.txt','w')
 
+
+
 wb_obj = openpyxl.load_workbook(path)
 
 constructor_declaration_for_bytes = ' '
