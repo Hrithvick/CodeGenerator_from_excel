@@ -3,6 +3,7 @@ import csv
 from configparser import ConfigParser
 
 ini = ConfigParser()
+ini.optionxform = str
 ini.read('config_nnf_assembler_test.ini')
 
 #Find all keys in the INI file to build a row template and
@@ -10,6 +11,7 @@ ini.read('config_nnf_assembler_test.ini')
 rowTemplate = {}
 for sec in ini.sections():
    for key,value in ini.items(sec):
+
        rowTemplate[key] = value
 print(rowTemplate)
 
